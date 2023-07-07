@@ -15,6 +15,7 @@ public class Server {
 
             Browser browser = playwright.chromium().launch(options);
             BrowserContext context = browser.newContext();
+            context.setDefaultTimeout(Integer.MAX_VALUE);
 
             //Scripts.initialize(context);
             String[] credentials = Scripts.read("/credentials.creds").split("\n");

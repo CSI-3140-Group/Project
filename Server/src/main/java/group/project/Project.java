@@ -17,7 +17,7 @@ public class Project {
             BrowserContext context = browser.newContext();
 
             //Scripts.initialize(context);
-            String[] credentials = Scripts.read("/credentials.txt").split("\n");
+            String[] credentials = Scripts.read("/credentials.creds").split("\n");
             Page page = context.newPage();
             navigateToCard(page, credentials);
             page.waitForClose(() -> {});

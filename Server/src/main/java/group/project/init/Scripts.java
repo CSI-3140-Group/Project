@@ -1,7 +1,7 @@
 package group.project.init;
 
 import com.microsoft.playwright.*;
-import group.project.Project;
+import group.project.Server;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -48,7 +48,7 @@ public class Scripts {
     }
 
     public static String read(String path) throws URISyntaxException, IOException {
-        return Files.readString(Path.of(Project.class.getResource(path).toURI()));
+        return Files.readString(Path.of(Server.class.getResource(path).toURI()));
     }
 
 }

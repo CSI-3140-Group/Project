@@ -11,6 +11,7 @@ repositories {
 
 dependencies {
     implementation("com.microsoft.playwright:playwright:1.34.0")
+    implementation("org.json:json:20230227")
     testImplementation(platform("org.junit:junit-bom:5.9.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")
 }

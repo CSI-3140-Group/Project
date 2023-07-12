@@ -1,1 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
+html, body{
+  height:100%;
+  margin: 0;
+}
+
+body {
+  background: linear-gradient(to bottom right, #880808, #800020);
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+}

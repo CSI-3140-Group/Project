@@ -1,0 +1,74 @@
+.logo{
+  margin-right: 1rem;
+}
+
+
+
+a {
+  position: relative;
+  color: black;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a::before{
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #880808;
+  visibility: hidden;
+  transition: all 0.3s ease-in-out;
+}
+
+
+a:hover::before {
+  visibility: visible;
+   width: 100%;
+}
+
+a:hover {
+  color: #880808;
+}
+
+
+button{
+  position: relative;
+  padding: 0;
+  transition: color 0.3s ease;
+  border: none;
+  background-color: none;
+  background: none;
+  font-size: 0.9rem;
+  margin-right: 1.2rem;
+}
+
+button::before{
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 1px;
+  bottom: 0;
+  left: 0;
+  background-color: #880808;
+  visibility: hidden;
+  transition: all 0.3s ease-in-out;
+}
+
+button:hover::before {
+  visibility: visible;
+   width: 100%;
+}
+
+button:hover{
+  background-color: none;
+  color: #880808;
+  cursor: pointer;
+
+}
+
+.spacer {
+  flex: 1 1 auto;
+}

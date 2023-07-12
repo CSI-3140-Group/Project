@@ -2,9 +2,9 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
-      <module name="Server" target="18" />
-      <module name="Server.main" target="18" />
-      <module name="Server.test" target="18" />
+      <module name="Server" target="17" />
+      <module name="Server.main" target="17" />
+      <module name="Server.test" target="17" />
     </bytecodeTargetLevel>
   </component>
 </project>

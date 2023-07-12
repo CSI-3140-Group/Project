@@ -1,0 +1,78 @@
+<div class="grades-container">
+  <div class="grades">
+    <p>Course Grades:</p>
+    <span>Filters:</span>
+    <div class="filters">
+      <mat-form-field>
+        <mat-label>Year</mat-label>
+        <mat-select>
+          <mat-option value="one">Option one</mat-option>
+          <mat-option value="two">Option two</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Semester</mat-label>
+        <mat-select>
+          <mat-option value="one">Option one</mat-option>
+          <mat-option value="two">Option two</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Course code</mat-label>
+        <mat-select [(ngModel)]="selectedCourseCode" (ngModelChange)="filterByCourseCode()">
+          <mat-option></mat-option>
+          <mat-option *ngFor="let grade of dataSource.data" [value]="grade.code">{{ grade.code }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <span>Columns:</span>
+    <div class="columns">
+      <mat-checkbox [checked]="columnVisibility['code']" (change)="updateColumnVisibility('code')">Course Code</mat-checkbox>
+      <mat-checkbox [checked]="columnVisibility['name']" (change)="updateColumnVisibility('name')">Course Name</mat-checkbox>
+      <mat-checkbox [checked]="columnVisibility['units']" (change)="updateColumnVisibility('units')">Units</mat-checkbox>
+      <mat-checkbox [checked]="columnVisibility['grading']" (change)="updateColumnVisibility('grading')">Grading</mat-checkbox>
+      <mat-checkbox [checked]="columnVisibility['grade']" (change)="updateColumnVisibility('grade')">Grade</mat-checkbox>
+      <mat-checkbox [checked]="columnVisibility['points']" (change)="updateColumnVisibility('points')">Grade Points</mat-checkbox>
+    </div>
+    <div class="table-container">
+      <table mat-table [dataSource]="dataSource" matSort>
+        <!-- Position Column -->
+        <ng-container matColumnDef="code">
+          <th mat-sort-header [hidden]="!columnVisibility['code']" class="course-code" mat-header-cell *matHeaderCellDef> Course Code </th>
+          <td [hidden]="!columnVisibility['code']" mat-cell *matCellDef="let element">{{ element.code }}</td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-sort-header [hidden]="!columnVisibility['name']" class="course-name" mat-header-cell *matHeaderCellDef> Course Name </th>
+          <td [hidden]="!columnVisibility['name']" mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="units">
+          <th mat-sort-header [hidden]="!columnVisibility['units']" class="course-units" mat-header-cell *matHeaderCellDef> Units </th>
+          <td [hidden]="!columnVisibility['units']" mat-cell *matCellDef="let element"> {{element.units}} </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="grading">
+          <th mat-sort-header [hidden]="!columnVisibility['grading']" class="course-grading" mat-header-cell *matHeaderCellDef> Grading </th>
+          <td [hidden]="!columnVisibility['grading']" mat-cell *matCellDef="let element"> {{element.grading}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="grade">
+          <th mat-sort-header [hidden]="!columnVisibility['grade']" class="course-grade" mat-header-cell *matHeaderCellDef> Grade </th>
+          <td [hidden]="!columnVisibility['grade']" mat-cell *matCellDef="let element"> {{element.grade}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="points">
+          <th mat-sort-header [hidden]="!columnVisibility['points']" class="course-points" mat-header-cell *matHeaderCellDef> Grade Points </th>
+          <td [hidden]="!columnVisibility['points']" mat-cell *matCellDef="let element"> {{element.points}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,17 @@
+<div class="login-container">
+  <p>Login</p>
+  <mat-form-field class="username-field">
+    <mat-label>Username</mat-label>
+    <input id="username" matInput placeholder="jsmit123@uottawa.ca" type="email" [formControl]="email" required>
+    <mat-error *ngIf="email.invalid">{{getEmailMessage()}}</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="password-field">
+    <mat-label>Password</mat-label>
+    <input id="password" matInput type="password" [formControl]="password" required>
+    <mat-error *ngIf="password.invalid">{{getPasswordMessage()}}</mat-error>
+  </mat-form-field>
+  <a target="_blank" href="https://uoforms.uottawa.ca/it/en/password-reset-request">Forgot Password?</a>
+
+  <button class="login-button" mat-raised-button color="warn" (click)="loginUser()" [disabled]="!email.valid || !password.valid">Login</button>
+</div>

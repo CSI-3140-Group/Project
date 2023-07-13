@@ -21,13 +21,15 @@ import { GradesComponent } from './grades/grades.component';
 import { TransactionsComponent } from './transactions/transactions.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {WebSocketService} from './services/websocket.service';
 
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'grades', component: GradesComponent },
   { path: 'transactions', component: TransactionsComponent },
-  { path: 'login', component: LoginComponent}
+  { path: 'login', component: LoginComponent},
+  { path: 'navbar', component: NavbarComponent}
 ];
 
 @NgModule({
@@ -58,7 +60,7 @@ const routes: Routes = [
     MatCheckboxModule
   ],
   exports: [RouterModule],
-  providers: [],
+  providers: [WebSocketService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -167,7 +167,8 @@ public class Server {
         page.waitForLoadState(LoadState.NETWORKIDLE);
 
         //# of pages is wrong - to change
-    /*    int numberOfPages = page.locator("//tr[@class=\"pager grid-pager\"]/td/table/tbody/tr/td").all().size() - 2;
+        int numberOfPages = page.locator("//tr[@class=\"pager grid-pager\"]/td/table/tbody/tr/td").all().size() / 2;
+        System.out.println(numberOfPages);
         for (int i = 1; i <= numberOfPages; i++) {
 
             if (i != 1) {
@@ -179,9 +180,14 @@ public class Server {
                 }
 
                 currentTd.locator("//a").click();
-                page.waitForLoadState(LoadState.NETWORKIDLE);
-            } */
+                //page.waitForSelector();
+            }
 
+            try {
+                Thread.sleep(3000);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
             // Table Page Scraping
             for (Locator row : page.locator("//table[@id=\"ctl00_lgnView_cpMain_ctlAccHistory_grdHistory\"]/tbody/tr").all()) {
@@ -202,7 +208,7 @@ public class Server {
 
                 data.put(currentTransaction);
             }
-       // }
+        }
 
         return data;
     }

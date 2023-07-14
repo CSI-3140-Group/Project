@@ -1,19 +1,9 @@
 package group.project;
 
-import com.microsoft.playwright.options.LoadState;
-import org.json.JSONArray;
-import com.microsoft.playwright.*;
-import group.project.init.Scripts;
-import org.json.JSONObject;
+public class OldServer {
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
 
-public class Server {
-
-    public static void main(String[] args) throws IOException, URISyntaxException {
+/*    public static void main(String[] args) throws IOException, URISyntaxException {
         try(Playwright playwright = Playwright.create()) {
             BrowserType.LaunchOptions options = new BrowserType.LaunchOptions();
             options.setHeadless(false);
@@ -167,7 +157,7 @@ public class Server {
         page.waitForLoadState(LoadState.NETWORKIDLE);
 
         //# of pages is wrong - to change
-    /*    int numberOfPages = page.locator("//tr[@class=\"pager grid-pager\"]/td/table/tbody/tr/td").all().size() - 2;
+    *//*    int numberOfPages = page.locator("//tr[@class=\"pager grid-pager\"]/td/table/tbody/tr/td").all().size() - 2;
         for (int i = 1; i <= numberOfPages; i++) {
 
             if (i != 1) {
@@ -180,7 +170,7 @@ public class Server {
 
                 currentTd.locator("//a").click();
                 page.waitForLoadState(LoadState.NETWORKIDLE);
-            } */
+            } *//*
 
 
             // Table Page Scraping
@@ -207,7 +197,7 @@ public class Server {
         return data;
     }
 
-    /* public static void navigateToGrades(Page page, String[] credentials) {
+    *//* public static void navigateToGrades(Page page, String[] credentials) {
         System.out.println("Logging in...");
         page.navigate("https://www.uocampus.uottawa.ca/psc/csprpr9www/EMPLOYEE/SA/c/NUI_FRAMEWORK.PT_LANDINGPAGE.GBL");
         page.getByPlaceholder("someone@example.com").fill(credentials[0]);

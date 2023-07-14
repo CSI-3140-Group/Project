@@ -7,7 +7,15 @@
 }
 
 p{
+  font-size: 1.5rem;
+}
+
+span{
   font-size: 1.2rem;
+}
+
+mat-label{
+  font-size: 1.1rem;
 }
 
 mat-form-field{
@@ -25,7 +33,7 @@ mat-form-field{
 
 .table-container{
   overflow-y: auto;
-  height: 26rem;
+  height: 36rem;
   position: relative;
 }
 
@@ -35,8 +43,13 @@ table{
 }
 
 th{
+  font-size: 1rem;
   width: 5rem;
   z-index: 1;
+}
+
+td{
+  font-size: 1rem;
 }
 
 mat-checkbox{

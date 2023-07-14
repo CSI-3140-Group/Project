@@ -8,7 +8,7 @@
 
   <mat-form-field class="password-field">
     <mat-label>Password</mat-label>
-    <input id="password" matInput type="password" [formControl]="password" required>
+    <input (keyup.enter)="loginUser()" id="password" matInput type="password" [formControl]="password" required>
     <mat-error *ngIf="password.invalid">{{getPasswordMessage()}}</mat-error>
   </mat-form-field>
   <a target="_blank" href="https://uoforms.uottawa.ca/it/en/password-reset-request">Forgot Password?</a>

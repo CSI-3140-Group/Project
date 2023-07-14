@@ -2,6 +2,6 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/grade.json" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/server_data/grades.json" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/server_data/grades_backup.json" charset="windows-1252" />
   </component>
 </project>

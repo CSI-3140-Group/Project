@@ -1,9 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import {Validators, FormControl} from '@angular/forms';
 import {NgIf} from '@angular/common';
 import {WebSocketService} from '../services/websocket.service';
 import { Router } from '@angular/router';
-import { Renderer2 } from '@angular/core';
 
 
 
@@ -15,6 +14,8 @@ import { Renderer2 } from '@angular/core';
 export class LoginComponent {
   email = new FormControl('', [Validators.required, Validators.email]);
   password = new FormControl('', [Validators.required]);
+
+  @Output() login: EventEmitter<any> = new EventEmitter();
 
   constructor(private webSocketService: WebSocketService, private router: Router) { }
 
@@ -37,6 +38,7 @@ export class LoginComponent {
     const jsonData = {username: this.email.value, password: this.password.value};
     this.webSocketService.send(jsonData);
     console.log(jsonData);
+    this.router.navigate(['/navbar']);
   }
 
 }

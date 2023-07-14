@@ -1,17 +1,18 @@
 package group.project;
 
-import com.microsoft.playwright.options.LoadState;
-import org.json.JSONArray;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.microsoft.playwright.*;
+import com.microsoft.playwright.options.LoadState;
 import group.project.init.Scripts;
-import org.json.JSONObject;
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 
-public class Server {
+public class OldServer {
+
 
     public static void main(String[] args) throws IOException, URISyntaxException {
         try(Playwright playwright = Playwright.create()) {
@@ -28,7 +29,7 @@ public class Server {
 
 
             userAuth(page, 1, credentials);
-            JSONArray testCard = scrapeCard(page);
+            JsonArray testCard = scrapeCard(page);
             // JSONArray testGrades = scrapeGrades(page);
 
             try (FileWriter file = new FileWriter("server_data/transactions.json")) {
@@ -69,9 +70,9 @@ public class Server {
         System.out.println("Successfully logged in!");
     }
 
-    private static JSONArray scrapeGrades(Page page) {
+    private static JsonArray scrapeGrades(Page page) {
 
-        JSONArray data = new JSONArray();
+        JsonArray data = new JsonArray();
         page.navigate("https://www.uocampus.uottawa.ca/psc/csprpr9www_newwin/EMPLOYEE/SA/c/SA_LEARNER_SERVICES.SSR_SSENRL_GRADE.GBL?NavColl=true");
 
         // Sleep or it crashes
@@ -106,12 +107,12 @@ public class Server {
                 }
             }
 
-            JSONObject currentTerm = new JSONObject();
-            currentTerm.put("level", semesterSplit[4]);
-            currentTerm.put("term", semesterSplit[1]);
-            currentTerm.put("year", semesterSplit[0]);
-            currentTerm.put("tgpa", possibleTGPAs.get(possibleTGPAs.size()-1));
-            currentTerm.put("cgpa", possibleCGPAs.get(possibleCGPAs.size()-1));
+            JsonObject currentTerm = new JsonObject();
+            currentTerm.addProperty("level", semesterSplit[4]);
+            currentTerm.addProperty("term", semesterSplit[1]);
+            currentTerm.addProperty("year", semesterSplit[0]);
+            currentTerm.addProperty("tgpa", possibleTGPAs.get(possibleTGPAs.size()-1));
+            currentTerm.addProperty("cgpa", possibleCGPAs.get(possibleCGPAs.size()-1));
 
             // Loop through courses
             for (int i = 0; i < 6; i++) {
@@ -125,48 +126,49 @@ public class Server {
                     String letterGrade = page.querySelector("//*[@id=\"win1divSTDNT_ENRL_SSV1_CRSE_GRADE_OFF$" + i + "\"]").textContent();
                     String gradePoints = page.querySelector("//*[@id=\"win1divSTDNT_ENRL_SSV1_GRADE_POINTS$" + i + "\"]").textContent();
 
-                    JSONObject currentGrade = new JSONObject();
+                    JsonObject currentGrade = new JsonObject();
 
-                    currentGrade.put("program", courseNameSplit[0]);
-                    currentGrade.put("code", courseNameSplit[1]);
-                    currentGrade.put("description", courseDescription);
-                    currentGrade.put("units", courseUnits);
-                    currentGrade.put("grading", gradingBase);
-                    currentGrade.put("letter", letterGrade);
-                    currentGrade.put("points", gradePoints);
+                    currentGrade.addProperty("program", courseNameSplit[0]);
+                    currentGrade.addProperty("code", courseNameSplit[1]);
+                    currentGrade.addProperty("description", courseDescription);
+                    currentGrade.addProperty("units", courseUnits);
+                    currentGrade.addProperty("grading", gradingBase);
+                    currentGrade.addProperty("letter", letterGrade);
+                    currentGrade.addProperty("points", gradePoints);
 
-                    currentTerm.put(courseName, currentGrade);
+                    currentTerm.add(courseName, currentGrade);
                 } catch (Exception e) {
                     break;
                 }
             }
 
             // Push Data to JSON and Switch Term
-            data.put(currentTerm);
+            data.add(currentTerm);
             page.locator("//*[@id=\"DERIVED_SSS_SCT_SSS_TERM_LINK\"]").click();
         }
 
         return data;
     }
 
-    private static JSONArray scrapeCard(Page page) {
-        JSONArray data = new JSONArray();
+    private static JsonArray scrapeCard(Page page) {
+        JsonArray data = new JsonArray();
 
         String flexBalance = page.locator("//*[@id=\"ctl00_lgnView_cpMain_ctlAccBalance_grdAccounts\"]/tbody[1]/tr[2]/td[2]").textContent();
         String diningBalance = page.locator("//*[@id=\"ctl00_lgnView_cpMain_ctlAccBalance_grdAccounts\"]/tbody[1]/tr[3]/td[2]").textContent();
         //System.out.println("Flex Balance: " + flexBalance);
         //System.out.println("Dining Balance: " + diningBalance);
 
-        JSONObject balances = new JSONObject();
-        balances.put("flex",flexBalance);
-        balances.put("dining",flexBalance);
-        data.put(balances);
+        JsonObject balances = new JsonObject();
+        balances.addProperty("flex",flexBalance);
+        balances.addProperty("dining",flexBalance);
+        data.add(balances);
 
         Locator transactionLi = page.locator("//div[@id=\"ctl00_lgnView_menuDesktop\"]/ul/li").all().get(1);
         transactionLi.locator("//a").click();
         page.waitForLoadState(LoadState.NETWORKIDLE);
 
         //# of pages is wrong - to change
+
         int numberOfPages = page.locator("//tr[@class=\"pager grid-pager\"]/td/table/tbody/tr/td").all().size() / 2;
         System.out.println(numberOfPages);
         for (int i = 1; i <= numberOfPages; i++) {
@@ -183,6 +185,7 @@ public class Server {
                 //page.waitForSelector();
             }
 
+
             try {
                 Thread.sleep(3000);
             } catch (Exception e) {
@@ -197,16 +200,16 @@ public class Server {
                 if (entries.length != 8) continue;
 
                 String[] dateTime = entries[0].split(" ");
-                JSONObject currentTransaction = new JSONObject();
+                JsonObject currentTransaction = new JsonObject();
 
-                currentTransaction.put("date", dateTime[0]);
-                currentTransaction.put("time", dateTime[1]);
-                currentTransaction.put("withdrawal", entries[2].charAt(0) == '-' ? "N/A" : entries[2]);
-                currentTransaction.put("deposit", entries[3].charAt(0) == '-' ? "N/A" : entries[3]);
-                currentTransaction.put("balance", entries[4]);
-                currentTransaction.put("description", entries[5]);
+                currentTransaction.addProperty("date", dateTime[0]);
+                currentTransaction.addProperty("time", dateTime[1]);
+                currentTransaction.addProperty("withdrawal", entries[2].charAt(0) == '-' ? "N/A" : entries[2]);
+                currentTransaction.addProperty("deposit", entries[3].charAt(0) == '-' ? "N/A" : entries[3]);
+                currentTransaction.addProperty("balance", entries[4]);
+                currentTransaction.addProperty("description", entries[5]);
 
-                data.put(currentTransaction);
+                data.add(currentTransaction);
             }
         }
 

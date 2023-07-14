@@ -2,10 +2,8 @@ package group.project.net.packet;
 
 import com.google.gson.JsonObject;
 import group.project.data.Wallet;
-import group.project.net.Connection;
 import group.project.net.Packet;
 
-import java.io.IOException;
 import java.util.Optional;
 
 public class EvaluateWalletS2CPacket extends Packet {

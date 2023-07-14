@@ -1,18 +1,20 @@
 package group.project;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import com.microsoft.playwright.*;
 import com.microsoft.playwright.options.LoadState;
 import group.project.init.Scripts;
+import group.project.net.BrowserCache;
 
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 
-public class OldServer {
-
+public class Test {
 
     public static void main(String[] args) throws IOException, URISyntaxException {
         try(Playwright playwright = Playwright.create()) {
@@ -22,13 +24,29 @@ public class OldServer {
             Browser browser = playwright.chromium().launch(options);
             BrowserContext context = browser.newContext();
             context.setDefaultTimeout(Integer.MAX_VALUE);
+            Page page = null;
+            int target = 1;
 
-            //Scripts.initialize(context);
-            String[] credentials = Scripts.read("/credentials.creds").split("\n");
-            Page page = context.newPage();
+            Path path = Path.of("./cookies.json");
+            System.out.println(path.toFile().getAbsolutePath());
 
+            if(path.toFile().exists()) {
+                JsonElement json = JsonParser.parseReader(new FileReader(path.toFile()));
+                BrowserCache cache = BrowserCache.of(json.getAsJsonObject());
+                context.addCookies(cache.getCookies());
+                page = context.newPage();
 
-            userAuth(page, 1, credentials);
+                if(target == 0) { // Grades
+                    page.navigate("https://www.uocampus.uottawa.ca/psc/csprpr9www/EMPLOYEE/SA/c/NUI_FRAMEWORK.PT_LANDINGPAGE.GBL");
+                } else if(target == 1) { // Card Transactions
+                    page.navigate("https://carteuottawacard.uottawa.ca/login.aspx");
+                }
+            } else {
+                page = context.newPage();
+                String[] credentials = Scripts.read("/credentials.creds").split("\n");
+                userAuth(page, target, credentials);
+            }
+
             JsonArray testCard = scrapeCard(page);
             // JSONArray testGrades = scrapeGrades(page);
 
@@ -41,7 +59,16 @@ public class OldServer {
                 e.printStackTrace();
             }
 
-            page.waitForClose(() -> {});
+            page.waitForClose(() -> {
+                BrowserCache cache = BrowserCache.of(null, context);
+
+                try {
+                    Files.writeString(path, new Gson().newBuilder().setPrettyPrinting()
+                            .create().toJson(cache.write().get()));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
         }
     }
 

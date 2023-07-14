@@ -2,7 +2,7 @@ package group.project.net;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.microsoft.playwright.Page;
+import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.options.Cookie;
 import com.microsoft.playwright.options.SameSiteAttribute;
 import group.project.data.Credentials;
@@ -32,8 +32,8 @@ public class BrowserCache implements IJsonSerializable<JsonObject> {
         return cache;
     }
 
-    public static BrowserCache of(Credentials credentials, Page page) {
-        return new BrowserCache(credentials, new ArrayList<>(page.context().cookies()));
+    public static BrowserCache of(Credentials credentials, BrowserContext context) {
+        return new BrowserCache(credentials, new ArrayList<>(context.cookies()));
     }
 
     public Credentials getCredentials() {
@@ -47,7 +47,11 @@ public class BrowserCache implements IJsonSerializable<JsonObject> {
     @Override
     public Optional<JsonObject> write() {
         JsonObject json = new JsonObject();
-        this.credentials.write().ifPresent(tag -> json.add("credentials", tag));
+
+        if(this.credentials != null) {
+            this.credentials.write().ifPresent(tag -> json.add("credentials", tag));
+        }
+
         JsonArray cookies = new JsonArray();
         this.cookies.forEach(cookie -> cookies.add(writeCookie(cookie)));
         json.add("cookies", cookies);

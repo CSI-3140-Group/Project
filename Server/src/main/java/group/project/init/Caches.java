@@ -33,7 +33,7 @@ public class Caches {
 
     public static void save(String principal) throws IOException {
         BrowserCache cache = REGISTRY.get(principal);
-        Path path = Path.of("/cache", principal + ".json");
+        Path path = Path.of("./cache", principal + ".json");
 
         if(cache == null) {
             Files.deleteIfExists(path);

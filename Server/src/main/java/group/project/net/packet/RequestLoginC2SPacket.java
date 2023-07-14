@@ -45,7 +45,7 @@ public class RequestLoginC2SPacket extends Packet {
 
         connection.send(new PromptMFAS2CPacket(Integer.parseInt(mfaCode.trim())));
         page.waitForURL("https://uozone2.uottawa.ca/?language=en");
-        Caches.put(BrowserCache.of(Credentials.create(this.principal, this.password), page));
+        Caches.put(BrowserCache.of(Credentials.create(this.principal, this.password), page.context()));
         Caches.save(this.principal);
 
         // We cheat by not requiring the client to send the request packets

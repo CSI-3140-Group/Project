@@ -6,7 +6,7 @@ import java.util.Optional;
 
 public class Course implements IJsonSerializable<JsonObject> {
 
-    public String faculty;
+    public String program;
     public String code;
     public String description;
     public float units;
@@ -18,8 +18,8 @@ public class Course implements IJsonSerializable<JsonObject> {
 
     }
 
-    public Course(String faculty, String code, String description, float units, String grading, String letter, float points) {
-        this.faculty = faculty;
+    public Course(String program, String code, String description, float units, String grading, String letter, float points) {
+        this.program = program;
         this.code = code;
         this.description = description;
         this.units = units;
@@ -31,7 +31,7 @@ public class Course implements IJsonSerializable<JsonObject> {
     @Override
     public Optional<JsonObject> write() {
         JsonObject object = new JsonObject();
-        object.addProperty("faculty", this.faculty);
+        object.addProperty("program", this.program);
         object.addProperty("code", this.code);
         object.addProperty("description", this.description);
         object.addProperty("units", this.units);
@@ -43,7 +43,7 @@ public class Course implements IJsonSerializable<JsonObject> {
 
     @Override
     public void read(JsonObject json) {
-        this.faculty = json.get("faculty").getAsString();
+        this.program = json.get("program").getAsString();
         this.code = json.get("code").getAsString();
         this.description = json.get("description").getAsString();
         this.units = json.get("units").getAsFloat();

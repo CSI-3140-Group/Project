@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'navbar',
@@ -7,7 +9,10 @@ import { Component } from '@angular/core';
 })
 export class NavbarComponent {
 
-  logout(){
+  @Output() logoutEvent: EventEmitter<any> = new EventEmitter();
 
+
+  logout(){
+    this.logoutEvent.emit(true);
   }
 }

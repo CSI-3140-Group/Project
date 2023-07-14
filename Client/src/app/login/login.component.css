@@ -1,5 +1,5 @@
 .login-container{
-  width: 35rem;
+  width: 38rem;
   height: 26rem;
   background: white;
   border-radius: 1rem;
@@ -14,7 +14,7 @@
 
 p{
   padding: 1rem;
-  font-size: 2rem;
+  font-size: 2.2rem;
   text-align: center;
 }
 
@@ -28,12 +28,22 @@ p{
   padding-right: 1rem;
 }
 
+mat-label{
+  font-size: 1.2rem;
+}
+
+input{
+  font-size: 1.2rem;
+}
+
 a{
   padding-left: 1rem;
+  font-size: 1.1rem;
 }
 
 .login-button{
   margin-top: 1.5rem;
   width: 50%;
   align-self: center;
+  font-size: 1.1rem;
 }

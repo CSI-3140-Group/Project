@@ -11,8 +11,8 @@ import { RouterModule, Routes } from '@angular/router';
 import {MatTableModule} from '@angular/material/table';
 import {Sort, MatSortModule} from '@angular/material/sort';
 import {MatSelectModule} from '@angular/material/select';
-
-
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -57,7 +57,9 @@ const routes: Routes = [
     MatTableModule,
     MatSortModule,
     MatSelectModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
   exports: [RouterModule],
   providers: [WebSocketService],

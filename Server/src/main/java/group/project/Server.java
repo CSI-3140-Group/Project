@@ -1,5 +1,6 @@
 package group.project;
 
+import com.microsoft.playwright.options.LoadState;
 import org.json.JSONArray;
 import com.microsoft.playwright.*;
 import group.project.init.Scripts;
@@ -26,12 +27,14 @@ public class Server {
             Page page = context.newPage();
 
 
-            userAuth(page, 0, credentials);
-            //JSONArray test = scrapeCard(page);
-            JSONArray testGrades = scrapeGrades(page);
+            userAuth(page, 1, credentials);
+            JSONArray testCard = scrapeCard(page);
+            // JSONArray testGrades = scrapeGrades(page);
 
-            try (FileWriter file = new FileWriter("server_data/grades.json")) {
-                file.write(testGrades.toString());
+            try (FileWriter file = new FileWriter("server_data/transactions.json")) {
+                file.write(testCard.toString());
+            //try (FileWriter file = new FileWriter("server_data/grades.json")) {
+                //file.write(testGrades.toString());
                 System.out.println("JSON data has been written to the file");
             } catch (IOException e) {
                 e.printStackTrace();
@@ -151,8 +154,55 @@ public class Server {
 
         String flexBalance = page.locator("//*[@id=\"ctl00_lgnView_cpMain_ctlAccBalance_grdAccounts\"]/tbody[1]/tr[2]/td[2]").textContent();
         String diningBalance = page.locator("//*[@id=\"ctl00_lgnView_cpMain_ctlAccBalance_grdAccounts\"]/tbody[1]/tr[3]/td[2]").textContent();
-        System.out.println("Flex Balance: " + flexBalance);
-        System.out.println("Dining Balance: " + diningBalance);
+        //System.out.println("Flex Balance: " + flexBalance);
+        //System.out.println("Dining Balance: " + diningBalance);
+
+        JSONObject balances = new JSONObject();
+        balances.put("flex",flexBalance);
+        balances.put("dining",flexBalance);
+        data.put(balances);
+
+        Locator transactionLi = page.locator("//div[@id=\"ctl00_lgnView_menuDesktop\"]/ul/li").all().get(1);
+        transactionLi.locator("//a").click();
+        page.waitForLoadState(LoadState.NETWORKIDLE);
+
+        //# of pages is wrong - to change
+    /*    int numberOfPages = page.locator("//tr[@class=\"pager grid-pager\"]/td/table/tbody/tr/td").all().size() - 2;
+        for (int i = 1; i <= numberOfPages; i++) {
+
+            if (i != 1) {
+                Locator currentTd;
+                if (i == 2) {
+                    currentTd = page.locator("//tr[@class=\"pager grid-pager\"]/td/table/tbody/tr/td").all().get(i);
+                } else {
+                    currentTd = page.locator("//tr[@class=\"pager grid-pager\"]/td/table/tbody/tr/td").all().get(i - 1);
+                }
+
+                currentTd.locator("//a").click();
+                page.waitForLoadState(LoadState.NETWORKIDLE);
+            } */
+
+
+            // Table Page Scraping
+            for (Locator row : page.locator("//table[@id=\"ctl00_lgnView_cpMain_ctlAccHistory_grdHistory\"]/tbody/tr").all()) {
+                String[] entries = row.locator("//td").all().stream()
+                        .map(Locator::textContent).toArray(String[]::new);
+
+                if (entries.length != 8) continue;
+
+                String[] dateTime = entries[0].split(" ");
+                JSONObject currentTransaction = new JSONObject();
+
+                currentTransaction.put("date", dateTime[0]);
+                currentTransaction.put("time", dateTime[1]);
+                currentTransaction.put("withdrawal", entries[2].charAt(0) == '-' ? "N/A" : entries[2]);
+                currentTransaction.put("deposit", entries[3].charAt(0) == '-' ? "N/A" : entries[3]);
+                currentTransaction.put("balance", entries[4]);
+                currentTransaction.put("description", entries[5]);
+
+                data.put(currentTransaction);
+            }
+       // }
 
         return data;
     }

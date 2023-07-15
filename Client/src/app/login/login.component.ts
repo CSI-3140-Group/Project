@@ -15,8 +15,6 @@ export class LoginComponent {
   email = new FormControl('', [Validators.required, Validators.email]);
   password = new FormControl('', [Validators.required]);
 
-  @ViewChild('login') loginDOM?: ElementRef | undefined;
-
   @Output() login: EventEmitter<any> = new EventEmitter();
 
   constructor(private webSocketService: WebSocketService, private router: Router) { }
@@ -37,14 +35,10 @@ export class LoginComponent {
   }
 
   loginUser(){
-    const jsonData = {username: this.email.value, password: this.password.value};
+    const jsonData = {id: 'request_login', principal: this.email.value, password: this.password.value};
     this.webSocketService.send(jsonData);
     console.log(jsonData);
-    
-  }
 
-  ngOnDestroy(){
-    document.body.removeChild(this.loginDOM?.nativeElement);
   }
 
 

@@ -1,9 +1,8 @@
-<mat-toolbar color="basic">
+<mat-toolbar class="navbar" color="basic">
   <mat-icon class="logo">school</mat-icon>
   <a routerLink="/home">uOttawa Student Helper</a>
   <span class="spacer"></span>
   <button routerLink="/grades">Grades</button>
   <button routerLink="/transactions">Transactions</button>
-  <button (click)="logout()" routerLink="/login">Log Out</button>
 </mat-toolbar>
 <router-outlet></router-outlet>

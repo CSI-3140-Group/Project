@@ -28,8 +28,10 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'grades', component: GradesComponent },
   { path: 'transactions', component: TransactionsComponent },
-  { path: 'login', component: LoginComponent},
-  { path: 'navbar', component: NavbarComponent}
+  { path: 'navbar', component: NavbarComponent, children: [
+    { path: '', redirectTo: 'home', pathMatch: 'full'},
+    {path: 'home', component: HomeComponent}
+  ]},
 ];
 
 @NgModule({

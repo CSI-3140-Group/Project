@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, ViewChild, ElementRef } from '@angular/core';
 import {Validators, FormControl} from '@angular/forms';
 import {NgIf} from '@angular/common';
 import {WebSocketService} from '../services/websocket.service';
@@ -14,6 +14,8 @@ import { Router } from '@angular/router';
 export class LoginComponent {
   email = new FormControl('', [Validators.required, Validators.email]);
   password = new FormControl('', [Validators.required]);
+
+  @ViewChild('login') loginDOM?: ElementRef | undefined;
 
   @Output() login: EventEmitter<any> = new EventEmitter();
 
@@ -38,7 +40,13 @@ export class LoginComponent {
     const jsonData = {username: this.email.value, password: this.password.value};
     this.webSocketService.send(jsonData);
     console.log(jsonData);
-    this.router.navigate(['/navbar']);
+    
   }
+
+  ngOnDestroy(){
+    document.body.removeChild(this.loginDOM?.nativeElement);
+  }
+
+
 
 }

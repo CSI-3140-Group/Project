@@ -1,3 +1,10 @@
+.navbar{
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 2px solid #880808;
+}
+
 .logo{
   margin-right: 1rem;
 }

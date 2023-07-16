@@ -1,6 +1,6 @@
 .login-container{
   width: 38rem;
-  height: 26rem;
+  height: 30rem;
   background: white;
   border-radius: 1rem;
   position: fixed;
@@ -46,4 +46,10 @@ a{
   width: 50%;
   align-self: center;
   font-size: 1.1rem;
+  padding: 1rem;
+}
+
+mat-spinner{
+  align-self: center;
+  margin-top: 2rem;
 }

@@ -22,15 +22,19 @@ import { TransactionsComponent } from './transactions/transactions.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {WebSocketService} from './services/websocket.service';
+import { MfaComponent } from './mfa/mfa.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 
 const routes: Routes = [
+  { path: '', component: LoginComponent },
+  { path: 'mfa', component: MfaComponent },
   { path: 'home', component: HomeComponent },
   { path: 'grades', component: GradesComponent },
   { path: 'transactions', component: TransactionsComponent },
   { path: 'navbar', component: NavbarComponent, children: [
     { path: '', redirectTo: 'home', pathMatch: 'full'},
-    {path: 'home', component: HomeComponent}
+    {path: 'home', component: HomeComponent},
   ]},
 ];
 
@@ -41,7 +45,8 @@ const routes: Routes = [
     HomeComponent,
     GradesComponent,
     TransactionsComponent,
-    NavbarComponent
+    NavbarComponent,
+    MfaComponent
   ],
   imports: [
     BrowserModule,
@@ -62,6 +67,7 @@ const routes: Routes = [
     MatCheckboxModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatProgressSpinnerModule
   ],
   exports: [RouterModule],
   providers: [WebSocketService],

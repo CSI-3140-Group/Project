@@ -1,8 +1,10 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import {MatSort, Sort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
+import {WebSocketService, Program, Semester, Course, Evaluation} from '../services/websocket.service';
 
-export interface Grades{
+
+/*export interface Grades{
     code: string;
     name: string;
     units: number;
@@ -10,8 +12,8 @@ export interface Grades{
     grade: string;
     points: number;
 }
-
-const grades: Grades[] = [
+*/
+/*const grades: Grades[] = [
   { code: 'ABC123', name: 'Course 1', units: 3, grading: 'D (50%) Passing Grade', grade: 'A+', points: 4.0 },
   { code: 'DEF456', name: 'Course 2', units: 3, grading: 'D (50%) Passing Grade', grade: 'B-', points: 3.0 },
   { code: 'GHI789', name: 'Course 3', units: 3, grading: 'D (50%) Passing Grade', grade: 'C', points: 2.0 },
@@ -26,8 +28,9 @@ const grades: Grades[] = [
   { code: 'HIJ456', name: 'Course 12', units: 3, grading: 'D (50%) Passing Grade', grade: 'A', points: 4.0 },
   { code: 'KLM789', name: 'Course 13', units: 3, grading: 'D (50%) Passing Grade', grade: 'B', points: 3.0 },
   { code: 'NOP012', name: 'Course 14', units: 3, grading: 'D (50%) Passing Grade', grade: 'C-', points: 1.7 },
-];
+];*/
 
+const grades: Course[] = [];
 
 @Component({
   selector: 'grades',
@@ -48,17 +51,34 @@ export class GradesComponent implements AfterViewInit {
 
   selectedCourseCode: string | undefined;
 
+  constructor(private webSocketService: WebSocketService){
+    webSocketService.socket$.subscribe({
+              next: (data: Evaluation) => {
+                if(data.id === 'evaluate_program'){
+                  for(let semester of data.program.semesters){
+                    for(let course of semester.courses){
+                      console.log(course);
+                      grades.push(course);
+                    }
+                  }
+                }
+              },
+              error: err => console.log(err),
+              complete: () => console.log('complete')
+            });
+  }
+
   @ViewChild(MatSort) sort!: MatSort;
 
   ngAfterViewInit(){
     this.dataSource.sort = this.sort;
 
-    this.dataSource.filterPredicate = (data: Grades, filter: string) => {
+    this.dataSource.filterPredicate = (data: Course, filter: string) => {
         const selectedCourseCode = this.selectedCourseCode?.trim().toLowerCase();
         return !selectedCourseCode || data.code.toLowerCase().includes(selectedCourseCode);
       };
 
-      this.dataSource.sortingDataAccessor = (data: Grades, sortHeaderId: string) => {
+      this.dataSource.sortingDataAccessor = (data: Course, sortHeaderId: string) => {
         if (sortHeaderId === 'grade') {
           // Assign numerical values to grades for sorting
           const gradeValue: {[key: string]: number} = {
@@ -74,11 +94,13 @@ export class GradesComponent implements AfterViewInit {
             'D+': 10,
             'D': 11,
             'D-': 12,
-            'F': 13
+            'F': 13,
+            'P': 14,
+            'N/A': 15,
           };
-          return gradeValue[data.grade];
+          return gradeValue[data.letter];
         }
-        return data[sortHeaderId as keyof Grades];
+        return data[sortHeaderId as keyof Course];
       };
   }
 

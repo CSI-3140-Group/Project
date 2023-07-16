@@ -46,7 +46,7 @@
         <!-- Name Column -->
         <ng-container matColumnDef="name">
           <th mat-sort-header [hidden]="!columnVisibility['name']" class="course-name" mat-header-cell *matHeaderCellDef> Course Name </th>
-          <td [hidden]="!columnVisibility['name']" mat-cell *matCellDef="let element"> {{element.name}} </td>
+          <td [hidden]="!columnVisibility['name']" mat-cell *matCellDef="let element"> {{element.description}} </td>
         </ng-container>
 
         <!-- Weight Column -->
@@ -63,7 +63,7 @@
 
         <ng-container matColumnDef="grade">
           <th mat-sort-header [hidden]="!columnVisibility['grade']" class="course-grade" mat-header-cell *matHeaderCellDef> Grade </th>
-          <td [hidden]="!columnVisibility['grade']" mat-cell *matCellDef="let element"> {{element.grade}} </td>
+          <td [hidden]="!columnVisibility['grade']" mat-cell *matCellDef="let element"> {{element.letter}} </td>
         </ng-container>
 
         <ng-container matColumnDef="points">

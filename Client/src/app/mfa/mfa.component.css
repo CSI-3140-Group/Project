@@ -1,0 +1,29 @@
+.mfa-container{
+  width: 38rem;
+  height: 31rem;
+  background: white;
+  border-radius: 1rem;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 1rem rgba(0,0,0,0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h1, h2{
+  font-weight: normal;
+}
+
+h2{
+  font-size: 1rem;
+}
+
+p{
+  font-size: 5rem;
+  padding: 1rem;
+  color: #880808;
+  border: 2px solid #880808;
+}

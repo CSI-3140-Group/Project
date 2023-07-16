@@ -28,6 +28,7 @@ public class RequestProgramC2SPacket extends Packet {
         for(Locator locator : page.locator("//*[@name=\"SSR_DUMMY_RECV1$sels$0\"]").all()) {
             locator.setChecked(true);
             page.locator("#DERIVED_SSS_SCT_SSR_PB_GO").first().click();
+            page.waitForSelector("//table[@id=\"TERM_CLASSES$scroll$0\"]");
 
             List<Course> courses = new ArrayList<>();
 
@@ -39,9 +40,10 @@ public class RequestProgramC2SPacket extends Packet {
 
                 courses.add(new Course(
                     name[0], name[1], entries[1],
-                    Float.parseFloat(entries[2]), entries[3],
-                    entries[4].charAt(0) == 160 ? "" : entries[4],
-                    entries[5].charAt(0) == 160 ? -1 : Float.parseFloat(entries[5])
+                    entries[2].charAt(0) == 160 ? "N/A" : entries[2],
+                    entries[3],
+                    entries[4].charAt(0) == 160 ? "N/A" : entries[4],
+                    entries[5].charAt(0) == 160 ? "N/A" : entries[5]
                 ));
             }
 
@@ -62,10 +64,13 @@ public class RequestProgramC2SPacket extends Packet {
                 }
             }
 
+            String tgpa = possibleTGPAs.get(possibleTGPAs.size() - 1);
+            String cgpa = possibleCGPAs.get(possibleCGPAs.size() - 1);
+
             semesters.add(new Semester(
                     nameSplit[4], nameSplit[1], nameSplit[0],
-                    Float.parseFloat(possibleTGPAs.get(possibleTGPAs.size() - 1)),
-                    Float.parseFloat(possibleCGPAs.get(possibleCGPAs.size() - 1)),
+                    tgpa.charAt(0) == 160 ? "N/A" : tgpa,
+                    cgpa.charAt(0) == 160 ? "N/A" : cgpa,
                     courses.toArray(new Course[0])
             ));
 

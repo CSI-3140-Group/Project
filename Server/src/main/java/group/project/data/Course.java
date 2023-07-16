@@ -9,16 +9,16 @@ public class Course implements IJsonSerializable<JsonObject> {
     public String program;
     public String code;
     public String description;
-    public float units;
+    public String units;
     public String grading;
     public String letter;
-    public float points;
+    public String points;
 
     public Course() {
 
     }
 
-    public Course(String program, String code, String description, float units, String grading, String letter, float points) {
+    public Course(String program, String code, String description, String units, String grading, String letter, String points) {
         this.program = program;
         this.code = code;
         this.description = description;
@@ -36,8 +36,8 @@ public class Course implements IJsonSerializable<JsonObject> {
         object.addProperty("description", this.description);
         object.addProperty("units", this.units);
         object.addProperty("grading", this.grading);
-        if(!this.letter.isEmpty()) object.addProperty("letter", this.letter);
-        if(this.points >= 0.0F) object.addProperty("points", this.points);
+        object.addProperty("letter", this.letter);
+        object.addProperty("points", this.points);
         return Optional.of(object);
     }
 
@@ -46,10 +46,10 @@ public class Course implements IJsonSerializable<JsonObject> {
         this.program = json.get("program").getAsString();
         this.code = json.get("code").getAsString();
         this.description = json.get("description").getAsString();
-        this.units = json.get("units").getAsFloat();
+        this.units = json.get("units").getAsString();
         this.grading = json.get("grading").getAsString();
-        this.letter = json.has("letter") ? json.get("letter").getAsString() : "";
-        this.points = json.has("points") ? json.get("points").getAsFloat() : -1.0F;
+        this.letter = json.get("letter").getAsString();
+        this.points =  json.get("points").getAsString();
     }
 
 }

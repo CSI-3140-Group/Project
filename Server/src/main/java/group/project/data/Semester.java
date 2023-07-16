@@ -10,15 +10,15 @@ public class Semester implements IJsonSerializable<JsonObject> {
     public String level;
     public String term;
     public String year;
-    public float tgpa;
-    public float cgpa;
+    public String tgpa;
+    public String cgpa;
     public Course[] courses;
 
     public Semester() {
 
     }
 
-    public Semester(String level, String term, String year, float tgpa, float cgpa, Course[] courses) {
+    public Semester(String level, String term, String year, String tgpa, String cgpa, Course[] courses) {
         this.level = level;
         this.term = term;
         this.year = year;
@@ -51,8 +51,8 @@ public class Semester implements IJsonSerializable<JsonObject> {
         this.level = json.get("level").getAsString();
         this.term = json.get("term").getAsString();
         this.year = json.get("year").getAsString();
-        this.tgpa = json.get("tgpa").getAsFloat();
-        this.cgpa = json.get("cgpa").getAsFloat();
+        this.tgpa = json.get("tgpa").getAsString();
+        this.cgpa = json.get("cgpa").getAsString();
 
         JsonArray array = json.get("courses").getAsJsonArray();
         this.courses = new Course[array.size()];

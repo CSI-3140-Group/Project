@@ -53,7 +53,8 @@ public class Connection {
         Optional<String> opt = packet.serialize();
 
         if(opt.isPresent()) {
-            this.session.getBasicRemote().sendText(opt.get());
+            this.session.getAsyncRemote().sendText(opt.get());
+            System.out.println(opt.get());
         }
     }
 

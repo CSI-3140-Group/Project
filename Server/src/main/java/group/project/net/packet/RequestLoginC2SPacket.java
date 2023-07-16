@@ -40,10 +40,11 @@ public class RequestLoginC2SPacket extends Packet {
             page.getByText("Sign in").click();
 
             String mfaCode = page.locator("#idRichContext_DisplaySign").textContent();
+            connection.send(new PromptMFAS2CPacket(Integer.parseInt(mfaCode.trim())));
+
             page.locator("#KmsiCheckboxField").click();
             page.getByText("Yes").click();
 
-            connection.send(new PromptMFAS2CPacket(Integer.parseInt(mfaCode.trim())));
             page.waitForURL("https://uozone2.uottawa.ca/?language=en");
             Caches.put(BrowserCache.of(Credentials.create(this.principal, this.password), page.context()));
             Caches.save(this.principal);

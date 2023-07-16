@@ -7,6 +7,7 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 import group.project.data.Credentials;
 import group.project.init.Packets;
+import jakarta.websocket.CloseReason;
 import jakarta.websocket.Session;
 
 import java.io.IOException;
@@ -71,6 +72,16 @@ public class Connection {
         context.setDefaultTimeout(Integer.MAX_VALUE);
         if(cache != null) context.addCookies(cache.getCookies());
         return this.page = context.newPage();
+    }
+
+    public void close(CloseReason reason) {
+        if(this.page != null) {
+            this.page.close();
+        }
+
+        if(this.playwright != null) {
+            this.playwright.close();
+        }
     }
 
 }

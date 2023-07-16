@@ -28,6 +28,7 @@ public class WebService {
     @OnClose
     public void onClose(Session session, CloseReason reason) {
         System.out.println("Session closed, reason: " + reason);
+        Connection.of(session).close(reason);
     }
 
 }

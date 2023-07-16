@@ -9,7 +9,8 @@ export class WebSocketService {
 
   constructor() {
     // Create the WebSocket connection
-    this.socket$ = webSocket('ws://localhost:6969/service');
+    this.socket$ = webSocket('ws://localhost:6969/service/');
+
     this.socket$.subscribe({
       next: (data) => this.read(data),
       error: err => console.log(err),

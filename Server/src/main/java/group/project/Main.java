@@ -15,7 +15,7 @@ public class Main {
         Packets.initialize();
         Caches.initialize();
 
-        Server server = new Server("localhost", 6969, "", null, WebService.class);
+        Server server = new Server("localhost", 6969, "/service", null, WebService.class);
 
         try {
             server.start();

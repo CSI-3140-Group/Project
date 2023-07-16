@@ -32,25 +32,26 @@ public class RequestLoginC2SPacket extends Packet {
         Page page = connection.launch(cache);
         page.navigate("https://uozone2.uottawa.ca/?language=en");
         page.waitForLoadState(LoadState.NETWORKIDLE);
-        if(connection.getPage().url().equals("https://uozone2.uottawa.ca/?language=en")) return;
 
-        page.getByPlaceholder("someone@example.com").fill(this.principal);
-        page.getByText("Next").click();
-        page.getByPlaceholder("Password").fill(this.password);
-        page.getByText("Sign in").click();
+        if(!connection.getPage().url().equals("https://uozone2.uottawa.ca/?language=en")) {
+            page.getByPlaceholder("someone@example.com").fill(this.principal);
+            page.getByText("Next").click();
+            page.getByPlaceholder("Password").fill(this.password);
+            page.getByText("Sign in").click();
 
-        String mfaCode = page.locator("#idRichContext_DisplaySign").textContent();
-        page.locator("#KmsiCheckboxField").click();
-        page.getByText("Yes").click();
+            String mfaCode = page.locator("#idRichContext_DisplaySign").textContent();
+            page.locator("#KmsiCheckboxField").click();
+            page.getByText("Yes").click();
 
-        connection.send(new PromptMFAS2CPacket(Integer.parseInt(mfaCode.trim())));
-        page.waitForURL("https://uozone2.uottawa.ca/?language=en");
-        Caches.put(BrowserCache.of(Credentials.create(this.principal, this.password), page.context()));
-        Caches.save(this.principal);
+            connection.send(new PromptMFAS2CPacket(Integer.parseInt(mfaCode.trim())));
+            page.waitForURL("https://uozone2.uottawa.ca/?language=en");
+            Caches.put(BrowserCache.of(Credentials.create(this.principal, this.password), page.context()));
+            Caches.save(this.principal);
+        }
 
         // We cheat by not requiring the client to send the request packets
-        connection.handle(new RequestProgramC2SPacket());
         connection.handle(new RequestWalletC2SPacket());
+        connection.handle(new RequestProgramC2SPacket());
     }
 
 }

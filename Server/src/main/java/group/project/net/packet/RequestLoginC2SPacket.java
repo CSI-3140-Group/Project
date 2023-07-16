@@ -49,6 +49,8 @@ public class RequestLoginC2SPacket extends Packet {
             Caches.save(this.principal);
         }
 
+        connection.send(new CompleteLoginS2CPacket());
+
         // We cheat by not requiring the client to send the request packets
         connection.handle(new RequestWalletC2SPacket());
         connection.handle(new RequestProgramC2SPacket());

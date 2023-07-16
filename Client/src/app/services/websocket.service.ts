@@ -14,12 +14,15 @@ export interface Course{
   points: string;
   program: string;
   units: string;
+  term: string;
+  year: string;
 }
 
 export interface Semester{
   cgpa: string;
   courses: Course[];
   level: string;
+  term: string;
   tgpa: string;
   year: string;
 }
@@ -33,6 +36,25 @@ export interface Evaluation{
   program: Program;
 }
 
+export interface Finances{
+  id: string;
+  wallet: Wallet;
+}
+
+export interface Wallet {
+  balance: string;
+  transactions: Transaction[];
+}
+
+export interface Transaction{
+  balance: string;
+  date: string;
+  deposit: string;
+  description: string;
+  time: string;
+  withdrawal: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -44,7 +66,7 @@ export class WebSocketService {
     this.socket$ = webSocket('ws://localhost:6969/service/');
 
     this.socket$.subscribe({
-      next: (data) => console.log(),
+      next: (data) => console.log(data),
       error: err => console.log(err),
       complete: () => console.log('complete')
     });

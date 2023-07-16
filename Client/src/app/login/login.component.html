@@ -16,4 +16,3 @@
   <button class="login-button" mat-raised-button color="warn" (click)="loginUser()" [disabled]="!email.valid || !password.valid">Login</button>
   <mat-spinner *ngIf="isLoading"></mat-spinner>
 </div>
-<router-outlet></router-outlet>

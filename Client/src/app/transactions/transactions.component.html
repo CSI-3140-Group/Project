@@ -6,30 +6,37 @@
     <div class="filters">
       <mat-form-field>
         <mat-label>Start date:</mat-label>
-        <input matInput [matDatepicker]="picker" [(ngModel)]="selectedDate" (dateChange)="applyDateFilter()">
+        <input matInput [matDatepicker]="picker" [(ngModel)]="selectedDate" (dateChange)="filterData()">
         <mat-hint>YYYY-MM-DD</mat-hint>
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
       <mat-form-field>
         <mat-label>End date:</mat-label>
-        <input matInput [matDatepicker]="picker2" [(ngModel)]="selectedDate2" (dateChange)="applyDateFilter()">
+        <input matInput [matDatepicker]="picker2" [(ngModel)]="selectedDate2" (dateChange)="filterData()">
         <mat-hint>YYYY-MM-DD</mat-hint>
         <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
         <mat-datepicker #picker2></mat-datepicker>
       </mat-form-field>
       <mat-form-field>
         <mat-label>Start time</mat-label>
-        <mat-select [(ngModel)]="startTime" (ngModelChange)="applyTimeFilter()">
+        <mat-select [(ngModel)]="startTime" (ngModelChange)="filterData()">
           <mat-option></mat-option>
           <mat-option *ngFor="let timeOption of timeOptions" [value]="timeOption">{{ timeOption }}</mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field>
         <mat-label>End time</mat-label>
-        <mat-select [(ngModel)]="endTime" (ngModelChange)="applyTimeFilter()">
+        <mat-select [(ngModel)]="endTime" (ngModelChange)="filterData()">
           <mat-option></mat-option>
           <mat-option *ngFor="let timeOption of timeOptions" [value]="timeOption">{{ timeOption }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="type">
+        <mat-label>Type of transaction</mat-label>
+        <mat-select [(ngModel)]="selectedType" (ngModelChange)="filterData()">
+          <mat-option></mat-option>
+          <mat-option *ngFor="let type of types" [value]="type">{{ type }}</mat-option>
         </mat-select>
       </mat-form-field>
     </div>
@@ -58,13 +65,13 @@
         <!-- Weight Column -->
         <ng-container matColumnDef="withdrawals">
           <th mat-sort-header [hidden]="!columnVisibility['withdrawals']" class="withdrawals" mat-header-cell *matHeaderCellDef> Withdrawals </th>
-          <td [hidden]="!columnVisibility['withdrawals']" mat-cell *matCellDef="let element"> {{element.withdrawals}} </td>
+          <td [hidden]="!columnVisibility['withdrawals']" mat-cell *matCellDef="let element"> {{element.withdrawal}} </td>
         </ng-container>
 
         <!-- Symbol Column -->
         <ng-container matColumnDef="deposits">
           <th mat-sort-header [hidden]="!columnVisibility['deposits']" class="deposits" mat-header-cell *matHeaderCellDef> Deposits </th>
-          <td [hidden]="!columnVisibility['deposits']" mat-cell *matCellDef="let element"> {{element.deposits}} </td>
+          <td [hidden]="!columnVisibility['deposits']" mat-cell *matCellDef="let element"> {{element.deposit}} </td>
         </ng-container>
 
         <ng-container matColumnDef="description">

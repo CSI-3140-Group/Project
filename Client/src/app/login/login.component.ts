@@ -26,7 +26,7 @@ export class LoginComponent {
               this.router.navigate(['/mfa'], { queryParams: { code } });
             }
             if(data.id === 'complete_login'){
-              this.router.navigate(['/navbar']);
+              this.router.navigate(['/home']);
             }
           },
           error: err => console.log(err),

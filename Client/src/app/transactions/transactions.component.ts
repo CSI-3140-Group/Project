@@ -1,8 +1,10 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import {MatSort, Sort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import { MAT_DATE_FORMATS, DateAdapter, MAT_DATE_LOCALE, MatDateFormats } from '@angular/material/core';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import {WebSocketService, Finances, Wallet, Transaction} from '../services/websocket.service';
+import { ActivatedRoute } from '@angular/router';
 
 import * as moment from 'moment';
 
@@ -18,103 +20,7 @@ const MY_DATE_FORMATS: MatDateFormats = {
   },
 };
 
-export interface Transactions {
-  date: string;
-  time: string;
-  withdrawals: string;
-  deposits: string;
-  description: string;
-  [key:string]: string;
-}
-
-const transactions: Transactions[] = [
-  {
-    date: '2023-07-01',
-    time: '09:30:15',
-    withdrawals: '$50.00',
-    deposits: '$0.00',
-    description: 'Withdrawal for groceries',
-  },
-  {
-    date: '2023-07-02',
-    time: '14:15:10',
-    withdrawals: '$0.00',
-    deposits: '$100.00',
-    description: 'Deposit from employer',
-  },
-  {
-    date: '2023-07-03',
-    time: '18:45:55',
-    withdrawals: '$20.00',
-    deposits: '$0.00',
-    description: 'Withdrawal for dining out',
-  },
-  {
-    date: '2023-07-04',
-    time: '12:20:30',
-    withdrawals: '$0.00',
-    deposits: '$75.00',
-    description: 'Deposit from freelance work',
-  },
-  {
-    date: '2023-07-05',
-    time: '08:10:05',
-    withdrawals: '$40.00',
-    deposits: '$0.00',
-    description: 'Withdrawal for gas',
-  },
-  {
-    date: '2023-07-06',
-    time: '16:55:40',
-    withdrawals: '$0.00',
-    deposits: '$200.00',
-    description: 'Deposit from savings',
-  },
-  {
-    date: '2023-07-07',
-    time: '10:45:25',
-    withdrawals: '$60.00',
-    deposits: '$0.00',
-    description: 'Withdrawal for shopping',
-  },
-  {
-    date: '2023-07-08',
-    time: '13:05:50',
-    withdrawals: '$0.00',
-    deposits: '$50.00',
-    description: 'Deposit from refund',
-  },
-  {
-    date: '2023-07-09',
-    time: '11:40:35',
-    withdrawals: '$25.00',
-    deposits: '$0.00',
-    description: 'Withdrawal for movie tickets',
-  },
-  {
-    date: '2023-07-10',
-    time: '17:30:20',
-    withdrawals: '$0.00',
-    deposits: '$150.00',
-    description: 'Deposit from side gig',
-  },
-  {
-      date: '2023-07-10',
-      time: '17:30:20',
-      withdrawals: '$0.00',
-      deposits: '$150.00',
-      description: 'Deposit from side gig',
-    },
-    {
-        date: '2023-07-10',
-        time: '17:30:20',
-        withdrawals: '$0.00',
-        deposits: '$150.00',
-        description: 'Deposit from side gig',
-      },
-];
-
-
+const transactions: Transaction[] = [];
 
 @Component({
   selector: 'transactions',
@@ -134,10 +40,14 @@ const transactions: Transactions[] = [
       },
     ],
 })
-export class TransactionsComponent {
+export class TransactionsComponent implements AfterViewInit {
   selectedDate: moment.Moment | undefined;
   selectedDate2: moment.Moment | undefined;
+  selectedType: string = "";
+  types: string[] = [];
   dataSource = new MatTableDataSource(transactions);
+  filteredData: Transaction[] = [];
+  finances?: Finances;
   columnVisibility: {[key: string]: boolean} = {
     date: true,
     time: true,
@@ -162,6 +72,22 @@ export class TransactionsComponent {
 
   @ViewChild(MatSort) sort!: MatSort;
 
+  constructor(private webSocketService: WebSocketService, private route: ActivatedRoute){
+
+    this.route.queryParams.subscribe(params => {
+        this.finances = JSON.parse(params['finances']) as Finances;
+      });
+
+      if(this.finances){
+        for(let transaction of this.finances.wallet.transactions){
+          transactions.push(transaction);
+          this.types.push(transaction.description);
+        }
+      }
+
+      this.types = Array.from(new Set(this.types));
+  }
+
   ngAfterViewInit(){
     this.dataSource.sort = this.sort;
     this.dataSource.sortingDataAccessor = (transaction, property) => {
@@ -171,7 +97,7 @@ export class TransactionsComponent {
           case 'deposits':
             return this.depositsAccessor(transaction);
           default:
-            return transaction[property];
+            return transaction[property as keyof Transaction];
         }
       };
   }
@@ -179,7 +105,7 @@ export class TransactionsComponent {
   updateColumnVisibility(columnKey: string): void {
     this.columnVisibility[columnKey] = !this.columnVisibility[columnKey];
   }
-
+/*
 applyTimeFilter() {
   const filteredData = transactions.filter((transaction) => {
     if ((this.startTime && this.endTime) && (this.startTime <= this.endTime)) {
@@ -194,8 +120,39 @@ applyTimeFilter() {
   });
 
   this.dataSource.data = filteredData;
- }
+ }*/
 
+  filterData(): void {
+    let filteredData = transactions;
+
+    const startDate = this.selectedDate ? moment(this.selectedDate).format('YYYY-MM-DD') : '';
+    const endDate = this.selectedDate2 ? moment(this.selectedDate2).format('YYYY-MM-DD') : '';
+    if((this.selectedDate && this.selectedDate2) && (this.selectedDate <= this.selectedDate2)){
+      filteredData = filteredData.filter((transaction) => {
+        const transactionDate = moment(transaction.date).format('YYYY-MM-DD');
+        return (transactionDate >= startDate) && (transactionDate <= endDate);
+      });
+    }
+
+    if ((this.startTime && this.endTime) && (this.startTime <= this.endTime)){
+      filteredData = filteredData.filter((transaction) => {
+        const startTime = new Date(`2000-01-01 ${this.startTime}`);
+        const endTime = new Date(`2000-01-01 ${this.endTime}`);
+        const transactionTime = new Date(`2000-01-01 ${transaction.time}`);
+        return transactionTime >= startTime && transactionTime <= endTime;
+      });
+    }
+
+    if(this.selectedType){
+      filteredData = filteredData.filter((transaction) => {
+        return transaction.description === this.selectedType;
+      });
+    }
+
+    this.filteredData = filteredData;
+    this.dataSource.data = filteredData;
+  }
+/*
 applyDateFilter() {
   const startDate = this.selectedDate ? moment(this.selectedDate).format('YYYY-MM-DD') : '';
   const endDate = this.selectedDate2 ? moment(this.selectedDate2).format('YYYY-MM-DD') : '';
@@ -215,15 +172,15 @@ applyDateFilter() {
   });
 
   this.dataSource.data = filteredData;
-}
+}*/
 
-withdrawalsAccessor = (transaction: Transactions): number => {
-  const value = parseFloat(transaction.withdrawals.replace('$', ''));
+withdrawalsAccessor = (transaction: Transaction): number => {
+  const value = parseFloat(transaction.withdrawal.replace('$', ''));
   return isNaN(value) ? 0 : value;
 };
 
-depositsAccessor = (transaction: Transactions): number => {
-  const value = parseFloat(transaction.deposits.replace('$', ''));
+depositsAccessor = (transaction: Transaction): number => {
+  const value = parseFloat(transaction.deposit.replace('$', ''));
   return isNaN(value) ? 0 : value;
 };
 

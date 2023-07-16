@@ -16,11 +16,11 @@ export class MfaComponent {
    constructor(private webSocketService: WebSocketService, private router: Router, private route: ActivatedRoute){
     this.route.queryParams.subscribe(params => {
       this.code = params['code'];
-    })
+    });
     webSocketService.socket$.subscribe({
             next: (data: Login) => {
               if(data.id === 'complete_login'){
-                this.router.navigate(['/navbar']);
+                this.router.navigate(['/home']);
               }
             },
             error: err => console.log(err),

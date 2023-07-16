@@ -9,6 +9,16 @@
   margin-right: 1rem;
 }
 
+.loading-backdrop {
+  background-color: rgba(0, 0, 0, 0.2) !important;
+}
+
+.loading-dialog {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 a {
   position: relative;
   color: black;

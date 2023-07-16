@@ -6,25 +6,26 @@
     <div class="filters">
       <mat-form-field>
         <mat-label>Year</mat-label>
-        <mat-select>
-          <mat-option value="one">Option one</mat-option>
-          <mat-option value="two">Option two</mat-option>
+        <mat-select [(ngModel)]="selectedYear" (ngModelChange)="filterData()">
+          <mat-option></mat-option>
+          <mat-option *ngFor="let year of years" [value]="year">{{year}}</mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field>
-        <mat-label>Semester</mat-label>
-        <mat-select>
-          <mat-option value="one">Option one</mat-option>
-          <mat-option value="two">Option two</mat-option>
+        <mat-label>Term</mat-label>
+        <mat-select [(ngModel)]="selectedTerm" (ngModelChange)="filterData()">
+          <mat-option></mat-option>
+          <mat-option *ngFor="let term of terms" [value]="term">{{term}}</mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field>
         <mat-label>Course code</mat-label>
-        <mat-select [(ngModel)]="selectedCourseCode" (ngModelChange)="filterByCourseCode()">
+        <mat-select [(ngModel)]="selectedCourseCode" (ngModelChange)="filterData()">
           <mat-option></mat-option>
-          <mat-option *ngFor="let grade of dataSource.data" [value]="grade.code">{{ grade.code }}</mat-option>
+          <mat-option *ngFor="let code of codes" [value]="code">{{ code }}</mat-option>
         </mat-select>
       </mat-form-field>
+      <mat-checkbox [(ngModel)]="displayCompleted" [checked]="displayCompleted" (change)="filterData()">Only show completed courses</mat-checkbox>
     </div>
     <span>Columns:</span>
     <div class="columns">

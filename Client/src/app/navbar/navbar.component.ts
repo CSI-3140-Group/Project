@@ -17,7 +17,7 @@ export class NavbarComponent {
   finances?: Finances;
 
   ngOnInit(){
-    const dialogRef = this.dialog.open(LoadingDialogComponent, {
+   const dialogRef = this.dialog.open(LoadingDialogComponent, {
         disableClose: true,
         backdropClass: 'loading-backdrop',
         panelClass: 'loading-dialog',

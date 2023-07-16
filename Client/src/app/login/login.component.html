@@ -2,7 +2,7 @@
   <p>Login</p>
   <mat-form-field class="username-field">
     <mat-label>Username</mat-label>
-    <input id="username" matInput placeholder="jsmit123@uottawa.ca" type="email" [formControl]="email" required>
+    <input #username id="username" matInput placeholder="jsmit123@uottawa.ca" type="email" [formControl]="email" required>
     <mat-error *ngIf="email.invalid">{{getEmailMessage()}}</mat-error>
   </mat-form-field>
 

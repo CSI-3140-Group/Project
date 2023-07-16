@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, ViewChild, ElementRef } from '@angular/core';
+import { Component, EventEmitter, Output, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import {Validators, FormControl} from '@angular/forms';
 import {NgIf} from '@angular/common';
 import {WebSocketService, Login} from '../services/websocket.service';
@@ -11,12 +11,12 @@ import { Router } from '@angular/router';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements AfterViewInit {
   email = new FormControl('', [Validators.required, Validators.email]);
   password = new FormControl('', [Validators.required]);
   isLoading: boolean = false;
 
-  @Output() login: EventEmitter<any> = new EventEmitter();
+  @ViewChild('username') username!: ElementRef;
 
   constructor(private webSocketService: WebSocketService, private router: Router) {
     webSocketService.socket$.subscribe({
@@ -32,6 +32,10 @@ export class LoginComponent {
           error: err => console.log(err),
           complete: () => console.log('complete')
         });
+   }
+
+   ngAfterViewInit() {
+      this.username.nativeElement.focus();
    }
 
   getEmailMessage(){

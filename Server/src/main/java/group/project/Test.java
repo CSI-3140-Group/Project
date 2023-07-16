@@ -1,8 +1,8 @@
+/*
 package group.project;
 
 import com.google.gson.*;
 import com.microsoft.playwright.*;
-import com.microsoft.playwright.options.LoadState;
 import group.project.init.Scripts;
 import group.project.net.BrowserCache;
 
@@ -179,44 +179,35 @@ public class Test {
 
     private static JsonArray scrapeCard(Page page) {
         JsonArray data = new JsonArray();
-
         String flexBalance = page.locator("//*[@id=\"ctl00_lgnView_cpMain_ctlAccBalance_grdAccounts\"]/tbody[1]/tr[2]/td[2]").textContent();
         String diningBalance = page.locator("//*[@id=\"ctl00_lgnView_cpMain_ctlAccBalance_grdAccounts\"]/tbody[1]/tr[3]/td[2]").textContent();
-        //System.out.println("Flex Balance: " + flexBalance);
-        //System.out.println("Dining Balance: " + diningBalance);
 
         JsonObject balances = new JsonObject();
         balances.addProperty("flex",flexBalance);
-        balances.addProperty("dining",flexBalance);
+        balances.addProperty("dining",diningBalance);
         data.add(balances);
 
         Locator transactionLi = page.locator("//div[@id=\"ctl00_lgnView_menuDesktop\"]/ul/li").all().get(1);
         transactionLi.locator("//a").click();
-        page.waitForLoadState(LoadState.NETWORKIDLE);
-
-        //# of pages is wrong - to change
+        page.waitForSelector("//div[@id=\"ctl00_lgnView_menuDesktop\"]/ul/li[position()=1]/a");
 
         int numberOfPages = page.locator("//tr[@class=\"pager grid-pager\"]/td/table/tbody/tr/td").all().size() / 2;
-        System.out.println(numberOfPages);
         for (int i = 1; i <= numberOfPages; i++) {
 
             if (i != 1) {
                 Locator currentTd;
+                String previousA;
+
                 if (i == 2) {
                     currentTd = page.locator("//tr[@class=\"pager grid-pager\"]/td/table/tbody/tr/td").all().get(i);
+                    previousA = "//tr[@class='pager grid-pager']/td/table/tbody/tr/td[position()=" + (i-1) + "]/a";
                 } else {
                     currentTd = page.locator("//tr[@class=\"pager grid-pager\"]/td/table/tbody/tr/td").all().get(i - 1);
+                    previousA = "//tr[@class='pager grid-pager']/td/table/tbody/tr/td[position()=" + (i-2) + "]/a";
                 }
 
                 currentTd.locator("//a").click();
-                //page.waitForSelector();
-            }
-
-
-            try {
-                Thread.sleep(3000);
-            } catch (Exception e) {
-                e.printStackTrace();
+                page.waitForSelector(previousA);
             }
 
             // Table Page Scraping
@@ -243,7 +234,8 @@ public class Test {
         return data;
     }
 
-    /* public static void navigateToGrades(Page page, String[] credentials) {
+    */
+/* public static void navigateToGrades(Page page, String[] credentials) {
         System.out.println("Logging in...");
         page.navigate("https://www.uocampus.uottawa.ca/psc/csprpr9www/EMPLOYEE/SA/c/NUI_FRAMEWORK.PT_LANDINGPAGE.GBL");
         page.getByPlaceholder("someone@example.com").fill(credentials[0]);
@@ -277,5 +269,7 @@ public class Test {
         String diningBalance = page.locator("//*[@id=\"ctl00_lgnView_cpMain_ctlAccBalance_grdAccounts\"]/tbody[1]/tr[3]/td[2]").textContent();
         System.out.println("Flex Balance: " + flexBalance);
         System.out.println("Dining Balance: " + diningBalance);
-    } */
+    } *//*
+
 }
+*/

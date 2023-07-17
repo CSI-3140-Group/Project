@@ -26,6 +26,9 @@ export class GradesComponent implements AfterViewInit {
   displayCompleted: boolean = false;
   displayedColumns: string[] = ['code', 'name', 'units', 'grading', 'grade', 'points'];
 
+  tgpas: Map<string, string> = new Map<string,string>;
+  tgpa?: string = "";
+
   selectedCourseCode: string = "";
   selectedTerm: string = "";
   selectedYear: string = "";
@@ -33,6 +36,7 @@ export class GradesComponent implements AfterViewInit {
   semesters: Semester[] = [];
   years: string[] = [];
   terms: string[] = [];
+  cgpa: string = "";
   codes: string[] = ['1000', '2000', '3000', '4000', '5000', '6000', '7000', '8000', '9000'];
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -47,6 +51,9 @@ export class GradesComponent implements AfterViewInit {
           this.semesters.push(semester);
           this.years.push(semester.year);
           this.terms.push(semester.term);
+          this.cgpa = semester.cgpa;
+          var key = semester.term + " " + semester.year;
+          this.tgpas.set(key,semester.tgpa);
           for(let course of semester.courses){
             course.term = semester.term;
             course.year = semester.year;
@@ -110,6 +117,11 @@ export class GradesComponent implements AfterViewInit {
         filteredData = filteredData.filter((course) => {
           return course.term === this.selectedTerm;
         });
+      }
+
+      if(this.selectedYear && this.selectedTerm){
+        var key = this.selectedTerm + " " + this.selectedYear;
+        this.tgpa = this.tgpas.get(key);
       }
 
       if (this.selectedYear) {

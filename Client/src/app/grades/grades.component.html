@@ -36,6 +36,10 @@
       <mat-checkbox [checked]="columnVisibility['grade']" (change)="updateColumnVisibility('grade')">Grade</mat-checkbox>
       <mat-checkbox [checked]="columnVisibility['points']" (change)="updateColumnVisibility('points')">Grade Points</mat-checkbox>
     </div>
+    <div class="gpa">
+      <p class="cgpa">CGPA: {{cgpa}}</p>
+      <p class="tgpa">TGPA (for selected year + term): {{tgpa}}</p>
+    </div>
     <div class="table-container">
       <table mat-table [dataSource]="dataSource" matSort>
         <!-- Position Column -->

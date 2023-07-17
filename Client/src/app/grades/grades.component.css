@@ -36,7 +36,7 @@ mat-form-field{
 
 .table-container{
   overflow-y: auto;
-  height: 36rem;
+  height: 33rem;
   position: relative;
 }
 
@@ -48,6 +48,20 @@ mat-form-field{
 table{
   table-layout: fixed;
   width: 100%;
+}
+
+.gpa{
+  display: flex;
+  justify-content: space-between;
+}
+
+.tgpa{
+  margin-self: auto;
+  padding-right: 6rem;
+}
+
+.cgpa{
+  padding-left: 1rem;
 }
 
 th{

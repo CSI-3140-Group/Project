@@ -15,6 +15,7 @@ export class LoginComponent implements AfterViewInit {
   email = new FormControl('', [Validators.required, Validators.email]);
   password = new FormControl('', [Validators.required]);
   isLoading: boolean = false;
+  message: string = "";
 
   @ViewChild('username') username!: ElementRef;
 
@@ -27,6 +28,10 @@ export class LoginComponent implements AfterViewInit {
             }
             if(data.id === 'complete_login'){
               this.router.navigate(['/home']);
+            }
+            if(data.id === 'failed_login'){
+              this.message = "Username or password is incorrect";
+              this.isLoading = false;
             }
           },
           error: err => console.log(err),

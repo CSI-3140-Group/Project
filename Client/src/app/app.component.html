@@ -1,3 +1,4 @@
-<navbar *ngIf="isLoggedIn"></navbar>
+<div *ngIf="!hideNavBar">
+  <navbar></navbar>
+</div>
 <router-outlet></router-outlet>
-

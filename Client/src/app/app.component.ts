@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import {WebSocketService, Login} from './services/websocket.service';
+import { Router, NavigationEnd, Event } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -7,17 +8,19 @@ import {WebSocketService, Login} from './services/websocket.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'Student Helper';
-  isLoggedIn: boolean = false;
-  constructor(private webSocketService: WebSocketService){
-    webSocketService.socket$.subscribe({
-              next: (data: Login) => {
-                if(data.id === 'complete_login'){
-                  this.isLoggedIn = true;
-                }
-              },
-              error: err => console.log(err),
-              complete: () => console.log('complete')
-            });
-  }
+  hideNavBar: boolean = false;
+  constructor(private router: Router) {
+      this.router.events.subscribe((event: Event) => {
+
+              if (event instanceof NavigationEnd) {
+                  // Hide progress spinner or progress bar
+                  if(event.url === '/' || event.url.includes('/mfa')){
+                    this.hideNavBar = true;
+                  }
+                  else{
+                  this.hideNavBar = false;
+                  }
+              }
+          });
+    }
 }

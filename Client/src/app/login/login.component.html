@@ -14,5 +14,6 @@
   <a target="_blank" href="https://uoforms.uottawa.ca/it/en/password-reset-request">Forgot Password?</a>
 
   <button class="login-button" mat-raised-button color="warn" (click)="loginUser()" [disabled]="!email.valid || !password.valid">Login</button>
+  <span>{{message}}</span>
   <mat-spinner *ngIf="isLoading"></mat-spinner>
 </div>

@@ -42,9 +42,7 @@ export class GradesComponent implements AfterViewInit {
 
   constructor(private webSocketService: WebSocketService, private route: ActivatedRoute){
 
-    this.route.queryParams.subscribe(params => {
-        this.evaluation = JSON.parse(params['grades']) as Evaluation;
-      });
+      this.evaluation = JSON.parse(this.webSocketService.getEvaluation());
 
       if(this.evaluation){
         for(let semester of this.evaluation.program.semesters){

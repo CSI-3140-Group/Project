@@ -48,6 +48,7 @@
       <mat-checkbox [checked]="columnVisibility['deposits']" (change)="updateColumnVisibility('deposits')">Deposits</mat-checkbox>
       <mat-checkbox [checked]="columnVisibility['description']" (change)="updateColumnVisibility('description')">Description</mat-checkbox>
     </div>
+    <h2>Balance: {{balance}}</h2>
     <div class="table-container">
       <table mat-table [dataSource]="dataSource" matSort>
         <!-- Position Column -->

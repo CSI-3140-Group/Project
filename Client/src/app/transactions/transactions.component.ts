@@ -69,6 +69,8 @@ export class TransactionsComponent implements AfterViewInit {
   startTime: string | null = null;
   endTime: string | null = null;
 
+  balance: string = "";
+
 
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -79,6 +81,7 @@ export class TransactionsComponent implements AfterViewInit {
       });
 
       if(this.finances){
+        this.balance = this.finances.wallet.balance;
         for(let transaction of this.finances.wallet.transactions){
           transactions.push(transaction);
           this.types.push(transaction.description);

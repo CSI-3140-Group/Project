@@ -46,7 +46,7 @@ public class RequestLoginC2SPacket extends Packet {
                 } else if(page.isVisible("#credentialList")) {
                     connection.send(new FailedLoginS2CPacket("Invalid email domain."));
                     return;
-                } else if(page.isVisible("//input[@name=\"passwd\"]")) {
+                } else if(page.isVisible("//input[@name=\"passwd\" and not(@class=\"moveOffScreen\")]")) {
                     break;
                 }
 

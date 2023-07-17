@@ -67,6 +67,7 @@ public class Connection {
     }
 
     public Page launch(BrowserCache cache) {
+        this.close(null);
         this.playwright = Playwright.create();
         Browser browser = this.playwright.chromium().launch(new LaunchOptions().setHeadless(false));
         BrowserContext context = browser.newContext();

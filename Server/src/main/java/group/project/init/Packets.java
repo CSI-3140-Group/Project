@@ -17,6 +17,7 @@ public class Packets {
     public static void initialize() {
         register("request_login", RequestLoginC2SPacket.class, RequestLoginC2SPacket::new);
         register("complete_login", CompleteLoginS2CPacket.class, CompleteLoginS2CPacket::new);
+        register("failed_login", FailedLoginS2CPacket.class, FailedLoginS2CPacket::new);
         register("prompt_mfa", PromptMFAS2CPacket.class, PromptMFAS2CPacket::new);
         register("request_program", RequestProgramC2SPacket.class, RequestProgramC2SPacket::new);
         register("evaluate_program", EvaluateProgramS2CPacket.class, EvaluateProgramS2CPacket::new);

@@ -1,10 +1,12 @@
 package group.project.data;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.Random;
 
@@ -13,14 +15,14 @@ public class Credentials implements IJsonSerializable<JsonObject> {
     private static final String SALT_SPACE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
 
     private String principal;
-    private String passwordHash;
+    private byte[] passwordHash;
     private String passwordSalt;
 
     private Credentials() {
 
     }
 
-    private Credentials(String principal, String passwordHash, String passwordSalt) {
+    private Credentials(String principal, byte[] passwordHash, String passwordSalt) {
         this.principal = principal;
         this.passwordHash = passwordHash;
         this.passwordSalt = passwordSalt;
@@ -47,14 +49,16 @@ public class Credentials implements IJsonSerializable<JsonObject> {
 
     public boolean canAuthenticate(String principal, String password) {
         return this.principal.equals(principal)
-                && this.passwordHash.equals(hash(password + this.passwordSalt));
+                && Arrays.equals(this.passwordHash, hash(password + this.passwordSalt));
     }
 
     @Override
     public Optional<JsonObject> write() {
         JsonObject json = new JsonObject();
         json.addProperty("principal", this.principal);
-        json.addProperty("passwordHash", this.passwordHash);
+        JsonArray array = new JsonArray();
+        for(byte b : this.passwordHash) array.add(b);
+        json.add("passwordHash", array);
         json.addProperty("passwordSalt", this.passwordSalt);
         return Optional.of(json);
     }
@@ -62,19 +66,21 @@ public class Credentials implements IJsonSerializable<JsonObject> {
     @Override
     public void read(JsonObject json) {
         this.principal = json.get("principal").getAsString();
-        this.passwordHash = json.get("passwordHash").getAsString();
+        JsonArray array = json.get("passwordHash").getAsJsonArray();
+        this.passwordHash = new byte[array.size()];
+        for(int i = 0; i < array.size(); i++) this.passwordHash[i] = array.get(i).getAsByte();
         this.passwordSalt = json.get("passwordSalt").getAsString();
     }
 
-    private static String hash(String password) {
+    private static byte[] hash(String password) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            return new String(digest.digest(password.getBytes(StandardCharsets.UTF_8)));
+            return digest.digest(password.getBytes(StandardCharsets.UTF_8));
         } catch(NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
 
-        return password;
+        return password.getBytes(StandardCharsets.UTF_8);
     }
 
     private static String generateSalt(Random random, int size) {

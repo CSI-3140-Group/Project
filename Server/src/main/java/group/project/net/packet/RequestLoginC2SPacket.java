@@ -1,7 +1,6 @@
 package group.project.net.packet;
 
 import com.google.gson.JsonObject;
-import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.LoadState;
 import group.project.data.Credentials;
@@ -11,7 +10,6 @@ import group.project.net.Connection;
 import group.project.net.Packet;
 
 import java.io.IOException;
-import java.io.InterruptedIOException;
 
 public class RequestLoginC2SPacket extends Packet {
 

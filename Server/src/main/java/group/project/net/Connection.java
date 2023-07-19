@@ -69,7 +69,7 @@ public class Connection {
     public Page launch(BrowserCache cache) {
         this.close(null);
         this.playwright = Playwright.create();
-        Browser browser = this.playwright.chromium().launch(new LaunchOptions().setHeadless(false));
+        Browser browser = this.playwright.chromium().launch(new LaunchOptions().setHeadless(true));
         BrowserContext context = browser.newContext();
         context.setDefaultTimeout(Integer.MAX_VALUE);
         if(cache != null) context.addCookies(cache.getCookies());

@@ -76,6 +76,20 @@ public class RequestLoginC2SPacket extends Packet {
             String mfaCode = page.locator("#idRichContext_DisplaySign").textContent();
             connection.send(new PromptMFAS2CPacket(Integer.parseInt(mfaCode.trim())));
 
+            while(true) {
+                if(page.isVisible("#idA_SAASTO_TOTP")) {
+                    connection.send(new FailedLoginS2CPacket("2FA failed to authenticate."));
+                    return;
+                } else if(page.isVisible("#KmsiCheckboxField")) {
+                    break;
+                }
+
+                if(!this.trySleep(100)) {
+                    connection.send(new FailedLoginS2CPacket("An unexpected error occurred."));
+                    return;
+                }
+            }
+
             page.locator("#KmsiCheckboxField").click();
             page.getByText("Yes").click();
 

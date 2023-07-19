@@ -106,22 +106,6 @@ export class TransactionsComponent implements AfterViewInit {
   updateColumnVisibility(columnKey: string): void {
     this.columnVisibility[columnKey] = !this.columnVisibility[columnKey];
   }
-/*
-applyTimeFilter() {
-  const filteredData = transactions.filter((transaction) => {
-    if ((this.startTime && this.endTime) && (this.startTime <= this.endTime)) {
-      const startTime = new Date(`2000-01-01 ${this.startTime}`);
-      const endTime = new Date(`2000-01-01 ${this.endTime}`);
-      const transactionTime = new Date(`2000-01-01 ${transaction.time}`);
-
-      return transactionTime >= startTime && transactionTime <= endTime;
-    }
-
-    return true; // No filter applied
-  });
-
-  this.dataSource.data = filteredData;
- }*/
 
   filterData(): void {
     let filteredData = transactions;
@@ -153,27 +137,6 @@ applyTimeFilter() {
     this.filteredData = filteredData;
     this.dataSource.data = filteredData;
   }
-/*
-applyDateFilter() {
-  const startDate = this.selectedDate ? moment(this.selectedDate).format('YYYY-MM-DD') : '';
-  const endDate = this.selectedDate2 ? moment(this.selectedDate2).format('YYYY-MM-DD') : '';
-
-  const filteredData = transactions.filter((transaction) => {
-    if((this.selectedDate && this.selectedDate2) && (this.selectedDate <= this.selectedDate2)){
-      const transactionDate = moment(transaction.date).format('YYYY-MM-DD');
-
-          return (
-            (transactionDate >= startDate) &&
-            (transactionDate <= endDate)
-          );
-    }
-
-    return true;
-
-  });
-
-  this.dataSource.data = filteredData;
-}*/
 
 withdrawalsAccessor = (transaction: Transaction): number => {
   const value = parseFloat(transaction.withdrawal.replace('$', ''));

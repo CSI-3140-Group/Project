@@ -44,35 +44,35 @@
       <table mat-table [dataSource]="dataSource" matSort>
         <!-- Position Column -->
         <ng-container matColumnDef="code">
-          <th mat-sort-header [hidden]="!columnVisibility['code']" class="course-code" mat-header-cell *matHeaderCellDef> Course Code </th>
+          <th mat-sort-header [hidden]="!columnVisibility['code']" class="course-code" mat-header-cell *matHeaderCellDef> Course Code <mat-icon>assignment</mat-icon></th>
           <td [hidden]="!columnVisibility['code']" mat-cell *matCellDef="let element">{{ element.code }}</td>
         </ng-container>
 
         <!-- Name Column -->
         <ng-container matColumnDef="name">
-          <th mat-sort-header [hidden]="!columnVisibility['name']" class="course-name" mat-header-cell *matHeaderCellDef> Course Name </th>
+          <th mat-sort-header [hidden]="!columnVisibility['name']" class="course-name" mat-header-cell *matHeaderCellDef> Course Name <mat-icon>class</mat-icon></th>
           <td [hidden]="!columnVisibility['name']" mat-cell *matCellDef="let element"> {{element.description}} </td>
         </ng-container>
 
         <!-- Weight Column -->
         <ng-container matColumnDef="units">
-          <th mat-sort-header [hidden]="!columnVisibility['units']" class="course-units" mat-header-cell *matHeaderCellDef> Units </th>
+          <th mat-sort-header [hidden]="!columnVisibility['units']" class="course-units" mat-header-cell *matHeaderCellDef> Units <mat-icon>trending_up</mat-icon></th>
           <td [hidden]="!columnVisibility['units']" mat-cell *matCellDef="let element"> {{element.units}} </td>
         </ng-container>
 
         <!-- Symbol Column -->
         <ng-container matColumnDef="grading">
-          <th mat-sort-header [hidden]="!columnVisibility['grading']" class="course-grading" mat-header-cell *matHeaderCellDef> Grading </th>
+          <th mat-sort-header [hidden]="!columnVisibility['grading']" class="course-grading" mat-header-cell *matHeaderCellDef> Grading <mat-icon>group_work</mat-icon></th>
           <td [hidden]="!columnVisibility['grading']" mat-cell *matCellDef="let element"> {{element.grading}} </td>
         </ng-container>
 
         <ng-container matColumnDef="grade">
-          <th mat-sort-header [hidden]="!columnVisibility['grade']" class="course-grade" mat-header-cell *matHeaderCellDef> Grade </th>
+          <th mat-sort-header [hidden]="!columnVisibility['grade']" class="course-grade" mat-header-cell *matHeaderCellDef> Grade <mat-icon>grade</mat-icon></th>
           <td [hidden]="!columnVisibility['grade']" mat-cell *matCellDef="let element"> {{element.letter}} </td>
         </ng-container>
 
         <ng-container matColumnDef="points">
-          <th mat-sort-header [hidden]="!columnVisibility['points']" class="course-points" mat-header-cell *matHeaderCellDef> Grade Points </th>
+          <th mat-sort-header [hidden]="!columnVisibility['points']" class="course-points" mat-header-cell *matHeaderCellDef> Grade Points <mat-icon>data_usage</mat-icon></th>
           <td [hidden]="!columnVisibility['points']" mat-cell *matCellDef="let element"> {{element.points}} </td>
         </ng-container>
 

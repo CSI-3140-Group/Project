@@ -53,30 +53,30 @@
       <table mat-table [dataSource]="dataSource" matSort>
         <!-- Position Column -->
         <ng-container matColumnDef="date">
-          <th mat-sort-header [hidden]="!columnVisibility['date']" class="trans-date" mat-header-cell *matHeaderCellDef> Date </th>
+          <th mat-sort-header [hidden]="!columnVisibility['date']" class="trans-date" mat-header-cell *matHeaderCellDef> Date <mat-icon>date_range</mat-icon></th>
           <td [hidden]="!columnVisibility['date']" mat-cell *matCellDef="let element">{{ element.date }}</td>
         </ng-container>
 
         <!-- Name Column -->
         <ng-container matColumnDef="time">
-          <th mat-sort-header [hidden]="!columnVisibility['time']" class="trans-time" mat-header-cell *matHeaderCellDef> Time </th>
+          <th mat-sort-header [hidden]="!columnVisibility['time']" class="trans-time" mat-header-cell *matHeaderCellDef> Time <mat-icon>access_time</mat-icon></th>
           <td [hidden]="!columnVisibility['time']" mat-cell *matCellDef="let element"> {{element.time}} </td>
         </ng-container>
 
         <!-- Weight Column -->
         <ng-container matColumnDef="withdrawals">
-          <th mat-sort-header [hidden]="!columnVisibility['withdrawals']" class="withdrawals" mat-header-cell *matHeaderCellDef> Withdrawals </th>
+          <th mat-sort-header [hidden]="!columnVisibility['withdrawals']" class="withdrawals" mat-header-cell *matHeaderCellDef> Withdrawals <mat-icon>hdr_strong</mat-icon></th>
           <td [hidden]="!columnVisibility['withdrawals']" mat-cell *matCellDef="let element"> {{element.withdrawal}} </td>
         </ng-container>
 
         <!-- Symbol Column -->
         <ng-container matColumnDef="deposits">
-          <th mat-sort-header [hidden]="!columnVisibility['deposits']" class="deposits" mat-header-cell *matHeaderCellDef> Deposits </th>
+          <th mat-sort-header [hidden]="!columnVisibility['deposits']" class="deposits" mat-header-cell *matHeaderCellDef> Deposits <mat-icon>hdr_weak</mat-icon></th>
           <td [hidden]="!columnVisibility['deposits']" mat-cell *matCellDef="let element"> {{element.deposit}} </td>
         </ng-container>
 
         <ng-container matColumnDef="description">
-          <th mat-sort-header [hidden]="!columnVisibility['description']" class="description" mat-header-cell *matHeaderCellDef> Description </th>
+          <th mat-sort-header [hidden]="!columnVisibility['description']" class="description" mat-header-cell *matHeaderCellDef> Description <mat-icon>description</mat-icon></th>
           <td [hidden]="!columnVisibility['description']" mat-cell *matCellDef="let element"> {{element.description}} </td>
         </ng-container>
 

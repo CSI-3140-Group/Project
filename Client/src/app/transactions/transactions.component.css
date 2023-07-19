@@ -52,6 +52,10 @@ mat-form-field{
   position: relative;
 }
 
+mat-icon{
+  padding-left: 0.3rem;
+}
+
 table{
   table-layout: fixed;
   width: 100%;

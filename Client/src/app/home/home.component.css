@@ -38,3 +38,7 @@ h1 {
   height: 20rem;
   width: 20rem;
 }
+
+h3{
+  font-style: italic;
+}

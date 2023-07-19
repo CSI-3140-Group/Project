@@ -3,6 +3,7 @@
   top: 0;
   z-index: 1000;
   border-bottom: 2px solid #880808;
+  display: flex;
 }
 
 .logo{
@@ -49,6 +50,9 @@ a:hover {
   color: #880808;
 }
 
+mat-icon{
+  margin-right: 0.2rem;
+}
 
 button{
   position: relative;
@@ -59,6 +63,8 @@ button{
   background: none;
   font-size: 1.2rem;
   margin-right: 1.2rem;
+  display: flex;
+  align-items: center;
 }
 
 button::before{

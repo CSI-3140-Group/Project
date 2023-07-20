@@ -22,6 +22,7 @@ public class EvaluateProgramS2CPacket extends Packet {
     public Optional<JsonObject> write() {
         JsonObject json = new JsonObject();
         this.program.write().ifPresent(tag -> json.add("program", tag));
+        System.out.println(json);
         return Optional.of(json);
     }
 

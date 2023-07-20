@@ -76,7 +76,7 @@ export class TransactionsComponent implements AfterViewInit {
 
   constructor(private webSocketService: WebSocketService, private route: ActivatedRoute){
 
-      this.finances = JSON.parse(this.webSocketService.getFinances());
+      this.finances = this.webSocketService.getFinances();
 
       if(this.finances){
         this.balance = this.finances.wallet.balance;

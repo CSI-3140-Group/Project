@@ -42,7 +42,7 @@ export class GradesComponent implements AfterViewInit {
 
   constructor(private webSocketService: WebSocketService, private route: ActivatedRoute){
 
-      this.evaluation = JSON.parse(this.webSocketService.getEvaluation());
+      this.evaluation = this.webSocketService.getEvaluation();
 
       if(this.evaluation){
         for(let semester of this.evaluation.program.semesters){

@@ -30,9 +30,10 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 
 const routes: Routes = [
+  { path: 'login', component: LoginComponent },
   { path: 'mfa', component: MfaComponent },
-    { path: 'grades', component: GradesComponent },
-    { path: 'transactions', component: TransactionsComponent },
+  { path: 'grades', component: GradesComponent },
+  { path: 'transactions', component: TransactionsComponent },
   { path: 'home', component: HomeComponent },
   { path: 'navbar', component: NavbarComponent},
   { path: '', component: LoginComponent, pathMatch: 'full' },

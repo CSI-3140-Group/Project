@@ -3,7 +3,6 @@ import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import {LoadingDialogComponent} from '../loading-dialog/loading-dialog.component';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
-
 export interface Login{
   id: string;
   code?: number;
@@ -67,7 +66,6 @@ export class WebSocketService {
   finances?: Finances;
 
   constructor(private dialog: MatDialog) {
-    // Create the WebSocket connection
     this.socket$ = webSocket('ws://localhost:6969/service/');
     let dialogRef: MatDialogRef<LoadingDialogComponent> | null = null;
         this.socket$.subscribe({
@@ -81,9 +79,11 @@ export class WebSocketService {
               }
               if((data as Finances).id === 'evaluate_wallet'){
                 this.finances = data as Finances;
+                localStorage.setItem('finances', JSON.stringify(this.finances));
               }
               if((data as Evaluation).id === 'evaluate_program'){
                 this.evaluation = data as Evaluation;
+                localStorage.setItem('evaluation', JSON.stringify(this.evaluation));
                 if(dialogRef){
                   dialogRef.close();
                 }
@@ -95,17 +95,24 @@ export class WebSocketService {
           });
   }
 
-  // Function to send JSON data to the WebSocket server
   send(data: any): void {
     this.socket$.next(data);
   }
 
-  getEvaluation(){
-    return JSON.stringify(this.evaluation);
-  }
+  getEvaluation(): Evaluation | undefined {
+      const evaluationData = localStorage.getItem('evaluation');
+      if (evaluationData) {
+        return JSON.parse(evaluationData);
+      }
+      return undefined;
+    }
 
-  getFinances(){
-    return JSON.stringify(this.finances);
+  getFinances(): Finances | undefined{
+      const financesData = localStorage.getItem('finances');
+      if (financesData) {
+        return JSON.parse(financesData);
+      }
+      return undefined;
   }
 
 }

@@ -40,8 +40,11 @@ export class LoginComponent implements AfterViewInit {
    }
 
    ngAfterViewInit() {
-      this.username.nativeElement.focus();
+     setTimeout(() => {
+       this.username.nativeElement.focus();
+     });
    }
+
 
   getEmailMessage(){
     if(this.email.hasError('required')){

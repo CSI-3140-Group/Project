@@ -22,6 +22,9 @@ export class MfaComponent {
               if(data.id === 'complete_login'){
                 this.router.navigate(['/home']);
               }
+              if(data.id === 'failed_login'){
+                this.router.navigate(['/login']);
+              }
             },
             error: err => console.log(err),
             complete: () => console.log('complete')

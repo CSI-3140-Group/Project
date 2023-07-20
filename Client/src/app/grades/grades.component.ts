@@ -36,6 +36,7 @@ export class GradesComponent implements AfterViewInit {
   semesters: Semester[] = [];
   years: string[] = [];
   terms: string[] = [];
+  cgpas: string[] = [];
   cgpa: string = "";
   codes: string[] = ['1000', '2000', '3000', '4000', '5000', '6000', '7000', '8000', '9000'];
   @ViewChild(MatSort) sort!: MatSort;
@@ -49,7 +50,7 @@ export class GradesComponent implements AfterViewInit {
           this.semesters.push(semester);
           this.years.push(semester.year);
           this.terms.push(semester.term);
-          this.cgpa = semester.cgpa;
+          this.cgpas.push(semester.cgpa);
           var key = semester.term + " " + semester.year;
           this.tgpas.set(key,semester.tgpa);
           for(let course of semester.courses){
@@ -59,7 +60,7 @@ export class GradesComponent implements AfterViewInit {
           }
         }
       }
-
+     this.cgpa = this.cgpas[0];
      this.terms = Array.from(new Set(this.terms));
      this.years = Array.from(new Set(this.years));
 

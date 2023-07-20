@@ -14,7 +14,7 @@ export class AppComponent {
 
               if (event instanceof NavigationEnd) {
                   // Hide progress spinner or progress bar
-                  if(event.url === '/' || event.url.includes('/mfa')){
+                  if(event.url === '/' || event.url.includes('/mfa') || event.url === '/login'){
                     this.hideNavBar = true;
                   }
                   else{

@@ -9,8 +9,18 @@ public class Program implements IJsonSerializable<JsonObject> {
 
     public Semester[] semesters;
 
+    public Program() {
+
+    }
+
     public Program(Semester[] semesters) {
         this.semesters = semesters;
+    }
+
+    public static Program fromJson(JsonObject json) {
+        Program program = new Program();
+        program.read(json);
+        return program;
     }
 
     @Override

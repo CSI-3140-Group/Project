@@ -2,7 +2,6 @@ package group.project.net.packet;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.options.LoadState;
 import group.project.data.Transaction;
 import group.project.data.Wallet;
 import group.project.net.Connection;

@@ -19,6 +19,12 @@ public class Wallet implements IJsonSerializable<JsonObject> {
         this.transactions = transactions;
     }
 
+    public static Wallet fromJson(JsonObject json) {
+        Wallet wallet = new Wallet();
+        wallet.read(json);
+        return wallet;
+    }
+
     @Override
     public Optional<JsonObject> write() {
         JsonObject json = new JsonObject();

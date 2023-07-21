@@ -1,6 +1,7 @@
 package group.project.net.packet;
 
 import com.google.gson.JsonObject;
+import com.microsoft.playwright.options.ScreenshotType;
 import group.project.data.Wallet;
 import group.project.net.Packet;
 

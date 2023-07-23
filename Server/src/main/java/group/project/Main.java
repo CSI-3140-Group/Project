@@ -1,5 +1,8 @@
 package group.project;
 
+import com.microsoft.playwright.Browser;
+import com.microsoft.playwright.BrowserType;
+import com.microsoft.playwright.Playwright;
 import group.project.init.Caches;
 import group.project.init.Packets;
 import group.project.net.WebService;
@@ -14,6 +17,9 @@ public class Main {
     public static void main(String[] args) throws IOException {
         Packets.initialize();
         Caches.initialize();
+
+        Browser browser = Playwright.create().chromium().launch(new BrowserType.LaunchOptions().setHeadless(true));
+        browser.close();
 
         Server server = new Server("localhost", 6969, "/service", null, WebService.class);
 

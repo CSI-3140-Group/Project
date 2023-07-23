@@ -1,19 +1,18 @@
 {"semesters":
-  [{"level":"Undergraduate","term":"Winter","year":"2024","tgpa":"N/A","cgpa":"9.570","courses":
-    [{"program":"ADM","code":"3779","description":"CONCEPT-SYS D'INFO, DEV & PERF","units":"3.00","grading":"D (50%) Passing Grade","letter":"N/A","points":"N/A"},
-      {"program":"CSI","code":"4142","description":"FUNDAMENTALS OF DATA SCIENCE","units":"3.00","grading":"D (50%) Passing Grade","letter":"N/A","points":"N/A"},
-      {"program":"CSI","code":"4145","description":"MACHINE LEARNING","units":"3.00","grading":"D (50%) Passing Grade","letter":"N/A","points":"N/A"},
-      {"program":"CSI","code":"4533","description":"M�TH INFORM POUR TRAIT. D'IMAG","units":"3.00","grading":"D (50%) Passing Grade","letter":"N/A","points":"N/A"},
-      {"program":"FLS","code":"3500","description":"SECOND LANGUAGE CERT. TEST","units":"3.00","grading":"D (50%) Passing Grade","letter":"N/A","points":"N/A"}
-    ]},
-  {"level":"Undergraduate","term":"Fall","year":"2023","tgpa":"N/A","cgpa":"9.570","courses":
-    [{"program":"CGI","code":"3902","description":"CO-OP WORK TERM","units":"3.00","grading":"D (50%) Passing Grade","letter":"N/A","points":"N/A"}
-    ]},
-  {"level":"Undergraduate","term":"Spring/Summer","year":"2023","tgpa":"N/A","cgpa":"9.570","courses":
-    [{"program":"ADM","code":"3718","description":"COMMERCE INTERNATIONAL","units":"3.00","grading":"D (50%) Passing Grade","letter":"N/A","points":"N/A"},
-      {"program":"CEG","code":"3585","description":"COMM DONN�ES ET R�SEAUTAGE","units":"3.00","grading":"D (50%) Passing Grade","letter":"N/A","points":"N/A"},
-      {"program":"CSI","code":"3104","description":"INTRO. FORMAL LANGUAGES","units":"3.00","grading":"D (50%) Passing Grade","letter":"N/A","points":"N/A"},
-      {"program":"CSI","code":"3140","description":"WWW STRUC. TECHN. & STANDARDS","units":"3.00","grading":"D (50%) Passing Grade","letter":"N/A","points":"N/A"},
-      {"program":"CSI","code":"3531","description":"SYST�MES D'EXPLOITATION","units":"3.00","grading":"D (50%) Passing Grade","letter":"N/A","points":"N/A"}
-    ]}
-    ]}
+[{"level":"Undergraduate","term":"Winter","year":"2022","tgpa":"9.250","cgpa":"9.025","courses":
+[{"program":"CHG","code":"4380","description":"Renewable Fuels","units":"3.00","grading":"D (50%) Passing Grade","letter":"A","points":"27.000"},
+  {"program":"CHG","code":"4364","description":"Oil and Gas Processing ","units":"3.00","grading":"D (50%) Passing Grade","letter":"A-","points":"24.000"},
+  {"program":"CHG","code":"4780","description":"Systemes particulaires et multi phases","units":"3.00","grading":"D (50%) Passing Grade","letter":"A+","points":"30.000"},
+  {"program":"PSY","code":"3777","description":"Processus cognitifs","units":"3.00","grading":"D (50%) Passing Grade","letter":"A+","points":"30.000"}
+]},
+  {"level":"Undergraduate","term":"Fall","year":"2021","tgpa":"8.800","cgpa":"8.800","courses":
+  [{"program":"CHG","code":"4331","description":"Introduction to Polymer Reaction Engineering","units":"3.00","grading":"D (50%) Passing Grade","letter":"A+","points":"30.000"},
+    {"program":"ALG","code":"3902","description":" Advanced German II","units":"3.00","grading":"D (50%) Passing Grade","letter":"B+","points":"21.000"},
+    {"program":"CHM","code":"4120","description":"Advanced Organic Chemistry","units":"3.00","grading":"D (50%) Passing Grade","letter":"A","points":"27.000"},
+    {"program":"CHG","code":"4302","description":"Environmental Biotechnology","units":"3.00","grading":"D (50%) Passing Grade","letter":"A","points":"27.000"},
+    {"program":"PSY","code":"3142","description":"Drugs and Behaviour","units":"3.00","grading":"D (50%) Passing Grade","letter":"A+","points":"27.000"}
+  ]},
+  {"level":"Undergraduate","term":"Spring/Summer","year":"2021","tgpa":"N/A","cgpa":"8.800","courses":
+  [{"program":"CGI","code":"4901","description":"CO-OP WORK TERM","units":"3.00","grading":"D (50%) Passing Grade","letter":"P","points":"N/A"}
+  ]}
+]}
